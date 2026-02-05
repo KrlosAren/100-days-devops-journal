@@ -14,7 +14,8 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 
 | Día | Tema | Estado |
 |-----|------|--------|
-| [Día 01](days/day-01/README.md) | Crear usuarios de servicio sin shell interactiva | Completado |
+| [Día 01](100-devops-days/day-001/README.md) | Crear usuarios de servicio sin shell interactiva | Completado |
+| [Día 02](100-devops-days/day-002/README.md) | Crear un usuario con fecha de expiración | Completado |
 
 ## Progreso - Kubernetes
 
@@ -33,9 +34,9 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 ```
 100-days-devops-journey/
 ├── README.md
-├── days/
+├── 100-devops-days/
 │   ├── template.md
-│   └── day-XX/
+│   └── day-XXX/
 │       └── README.md
 ├── kubernetes-journey/
 │   ├── template.md
