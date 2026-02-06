@@ -16,6 +16,7 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 |-----|------|--------|
 | [Día 01](100-devops-days/day-001/README.md) | Crear usuarios de servicio sin shell interactiva | Completado |
 | [Día 02](100-devops-days/day-002/README.md) | Crear un usuario con fecha de expiración | Completado |
+| [Día 03](100-devops-days/day-003/README.md) | Deshabilitar el acceso SSH directo como root | Completado |
 
 ## Progreso - Kubernetes
 
@@ -29,6 +30,7 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | Día | Tema | Estado |
 |-----|------|--------|
 | [Día 01](ansible-journey/days/day-01/README.md) | Crear un archivo vacío con Ansible | Completado |
+| [Día 02](ansible-journey/day-002/README.md) | Instalar e iniciar httpd con Ansible | Completado |
 
 ## Estructura del repositorio
 

@@ -1,0 +1,2 @@
+[stapp01]
+stapp01 ansible_user=tony ansible_password=xxxx ansible_host=172.16.238.10
