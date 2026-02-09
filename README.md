@@ -25,6 +25,7 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 |-----|------|--------|
 | [Día 01](kubernetes-journey/days/day-01/README.md) | Crear un Pod en Kubernetes | Completado |
 | [Día 02](kubernetes-journey/day-002/README.md) | Crear un Deployment en Kubernetes | Completado |
+| [Día 03](kubernetes-journey/day-003/README.md) | Crear un Namespace y desplegar un Pod en él | Completado |
 
 ## Progreso - Ansible
 
