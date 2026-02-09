@@ -17,6 +17,7 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 01](100-devops-days/day-001/README.md) | Crear usuarios de servicio sin shell interactiva | Completado |
 | [Día 02](100-devops-days/day-002/README.md) | Crear un usuario con fecha de expiración | Completado |
 | [Día 03](100-devops-days/day-003/README.md) | Deshabilitar el acceso SSH directo como root | Completado |
+| [Día 04](100-devops-days/day-004/README.md) | Permisos de ejecución y propiedad de archivos | Completado |
 
 ## Progreso - Kubernetes
 
