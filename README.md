@@ -1,4 +1,4 @@
-# 100 Days DevOps Journey
+# 100 Days DevOps Journal
 
 Reto personal de 100 días para aprender y practicar DevOps. Cada día se documenta un desafío, concepto o práctica relacionada con el mundo DevOps.
 
@@ -23,38 +23,38 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 
 | Día | Tema | Estado |
 |-----|------|--------|
-| [Día 01](kubernetes-journey/days/day-01/README.md) | Crear un Pod en Kubernetes | Completado |
-| [Día 02](kubernetes-journey/day-002/README.md) | Crear un Deployment en Kubernetes | Completado |
-| [Día 03](kubernetes-journey/day-003/README.md) | Crear un Namespace y desplegar un Pod en él | Completado |
+| [Día 01](kubernetes-journal/days/day-01/README.md) | Crear un Pod en Kubernetes | Completado |
+| [Día 02](kubernetes-journal/day-002/README.md) | Crear un Deployment en Kubernetes | Completado |
+| [Día 03](kubernetes-journal/day-003/README.md) | Crear un Namespace y desplegar un Pod en él | Completado |
 
 ## Progreso - Ansible
 
 | Día | Tema | Estado |
 |-----|------|--------|
-| [Día 01](ansible-journey/days/day-01/README.md) | Crear un archivo vacío con Ansible | Completado |
-| [Día 02](ansible-journey/day-002/README.md) | Instalar e iniciar httpd con Ansible | Completado |
+| [Día 01](ansible-journal/days/day-01/README.md) | Crear un archivo vacío con Ansible | Completado |
+| [Día 02](ansible-journal/day-002/README.md) | Instalar e iniciar httpd con Ansible | Completado |
 
 ## Estructura del repositorio
 
 ```
-100-days-devops-journey/
+100-days-devops-journal/
 ├── README.md
 ├── 100-devops-days/
 │   ├── template.md
 │   └── day-XXX/
 │       └── README.md
-├── kubernetes-journey/
+├── kubernetes-journal/
 │   ├── template.md
 │   └── days/
 │       └── day-XX/
 │           └── README.md
-└── ansible-journey/
+└── ansible-journal/
     ├── template.md
     └── days/
         └── day-XX/
             └── README.md
 ```
 
-- Cada journey tiene su propia carpeta con la misma estructura de `days/`
+- Cada journal tiene su propia carpeta con la misma estructura de `days/`
 - Los scripts o archivos de código del día se guardan junto al README en la misma carpeta
-- Se usa `template.md` de cada journey como plantilla para crear nuevos días
+- Se usa `template.md` de cada journal como plantilla para crear nuevos días
