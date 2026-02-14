@@ -18,6 +18,8 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 02](100-devops-days/day-002/README.md) | Crear un usuario con fecha de expiración | Completado |
 | [Día 03](100-devops-days/day-003/README.md) | Deshabilitar el acceso SSH directo como root | Completado |
 | [Día 04](100-devops-days/day-004/README.md) | Permisos de ejecución y propiedad de archivos | Completado |
+| [Día 05](100-devops-days/day-005/README.md) | SELinux | Completado |
+| [Día 06](100-devops-days/day-006/README.md) | Crear un Cron Job con Cronie | Completado |
 
 ## Progreso - Kubernetes
 
@@ -26,6 +28,7 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 01](kubernetes-journal/days/day-01/README.md) | Crear un Pod en Kubernetes | Completado |
 | [Día 02](kubernetes-journal/day-002/README.md) | Crear un Deployment en Kubernetes | Completado |
 | [Día 03](kubernetes-journal/day-003/README.md) | Crear un Namespace y desplegar un Pod en él | Completado |
+| [Día 04](kubernetes-journal/day-004/README.md) | Resource Requests y Limits | Completado |
 
 ## Progreso - Ansible
 
