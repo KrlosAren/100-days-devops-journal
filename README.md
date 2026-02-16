@@ -20,6 +20,7 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 04](100-devops-days/day-004/README.md) | Permisos de ejecución y propiedad de archivos | Completado |
 | [Día 05](100-devops-days/day-005/README.md) | SELinux | Completado |
 | [Día 06](100-devops-days/day-006/README.md) | Crear un Cron Job con Cronie | Completado |
+| [Día 07](100-devops-days/day-007/README.md) | Autenticación SSH sin contraseña (password-less) | Completado |
 
 ## Progreso - Kubernetes
 
