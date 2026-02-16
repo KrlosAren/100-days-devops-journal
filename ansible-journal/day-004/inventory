@@ -1,4 +1,4 @@
 [all]
-stapp01 ansible_user=tony ansible_password=Ir0nM@n ansible_host=stapp01.stratos.xfusioncorp.com
-stapp02 ansible_user=steve ansible_password=Am3ric@ ansible_host=stapp02.stratos.xfusioncorp.com
-stapp03 ansible_user=banner ansible_password=BigGr33n ansible_host=stapp03.stratos.xfusioncorp.com
+stapp01 ansible_user=tony ansible_password=xxxxxxxxx ansible_host=stapp01.stratos.xfusioncorp.com
+stapp02 ansible_user=steve ansible_password=xxxxxxxxx ansible_host=stapp02.stratos.xfusioncorp.com
+stapp03 ansible_user=banner ansible_password=xxxxxxxxx ansible_host=stapp03.stratos.xfusioncorp.com

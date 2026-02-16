@@ -1,0 +1,26 @@
+---
+- name: create empty file
+  hosts: all
+  become: yes
+
+  vars:
+    file_dst: "/tmp/code.txt"
+
+  tasks:
+
+    - name: create file
+      file:
+        path: "{{ file_dst }}"
+        state: touch
+        mode: "0644"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+
+    - name: valid file creation
+      stat:
+        path: "{{ file_dst }}"
+      register: file_creation
+
+    - name: output stat
+      debug:
+        msg: "Owner : {{ file_creation.stat.pw_name }}, Group : {{ file_creation.stat.gr_name }}, Mode : {{ file_creation.stat.mode | string | regex_replace('^0+', '') }}"

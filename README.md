@@ -36,6 +36,9 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 |-----|------|--------|
 | [Día 01](ansible-journal/days/day-01/README.md) | Crear un archivo vacío con Ansible | Completado |
 | [Día 02](ansible-journal/day-002/README.md) | Instalar e iniciar httpd con Ansible | Completado |
+| [Día 03](ansible-journal/day-003/README.md) | — | Completado |
+| [Día 04](ansible-journal/day-004/README.md) | Copiar archivos a servidores de aplicación | Completado |
+| [Día 05](ansible-journal/day-005/README.md) | Crear archivos con permisos y propietario específico | Completado |
 
 ## Estructura del repositorio
 
