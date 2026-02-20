@@ -32,6 +32,8 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 02](kubernetes-journal/day-002/README.md) | Crear un Deployment en Kubernetes | Completado |
 | [Día 03](kubernetes-journal/day-003/README.md) | Crear un Namespace y desplegar un Pod en él | Completado |
 | [Día 04](kubernetes-journal/day-004/README.md) | Resource Requests y Limits | Completado |
+| [Día 05](kubernetes-journal/day-005/README.md) | Rolling Update de un Deployment | Completado |
+| [Día 06](kubernetes-journal/day-006/README.md) | Rollback de un Deployment a una revisión previa | Completado |
 
 ## Progreso - Ansible
 
