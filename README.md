@@ -21,6 +21,8 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 05](100-devops-days/day-005/README.md) | SELinux | Completado |
 | [Día 06](100-devops-days/day-006/README.md) | Crear un Cron Job con Cronie | Completado |
 | [Día 07](100-devops-days/day-007/README.md) | Autenticación SSH sin contraseña (password-less) | Completado |
+| [Día 08](100-devops-days/day-008/README.md) | Instalar Ansible con pip3 disponible para todos los usuarios | Completado |
+| [Día 09](100-devops-days/day-009/README.md) | Troubleshooting: MariaDB no inicia por directorio faltante | Completado |
 
 ## Progreso - Kubernetes
 
