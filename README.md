@@ -23,6 +23,12 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 07](100-devops-days/day-007/README.md) | Autenticación SSH sin contraseña (password-less) | Completado |
 | [Día 08](100-devops-days/day-008/README.md) | Instalar Ansible con pip3 disponible para todos los usuarios | Completado |
 | [Día 09](100-devops-days/day-009/README.md) | Troubleshooting: MariaDB no inicia por directorio faltante | Completado |
+| [Día 10](100-devops-days/day-010/README.md) | — | Completado |
+| [Día 11](100-devops-days/day-011/README.md) | Instalar y configurar Apache Tomcat | Completado |
+| [Día 12](100-devops-days/day-012/README.md) | Troubleshooting de Apache: Puerto ocupado por otro proceso + Guia iptables | Completado |
+| [Día 13](100-devops-days/day-013/README.md) | Implementar iptables para restringir acceso a Apache | Completado |
+| [Día 14](100-devops-days/day-014/README.md) | Troubleshooting de Apache: Servicio caido por conflicto de puerto | Completado |
+| [Día 15](100-devops-days/day-015/README.md) | Instalar y configurar Nginx con SSL (Self-Signed Certificate) | Completado |
 
 ## Progreso - Kubernetes
 
@@ -34,6 +40,14 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 04](kubernetes-journal/day-004/README.md) | Resource Requests y Limits | Completado |
 | [Día 05](kubernetes-journal/day-005/README.md) | Rolling Update de un Deployment | Completado |
 | [Día 06](kubernetes-journal/day-006/README.md) | Rollback de un Deployment a una revisión previa | Completado |
+| [Día 07](kubernetes-journal/day-007/README.md) | — | Completado |
+| [Día 08](kubernetes-journal/day-008/README.md) | Crear un CronJob en Kubernetes | Completado |
+| [Día 09](kubernetes-journal/day-009/README.md) | Crear un Job Countdown en Kubernetes | Completado |
+| [Día 10](kubernetes-journal/day-010/README.md) | Pod con ConfigMap, Variable de Entorno y Volume Mount | Completado |
+| [Día 11](kubernetes-journal/day-011/README.md) | Troubleshooting de Pod: ImagePullBackOff | Completado |
+| [Día 12](kubernetes-journal/day-012/README.md) | Actualizar Deployment y Service sin eliminarlos | Completado |
+| [Día 13](kubernetes-journal/day-013/README.md) | Crear un ReplicationController | Completado |
+| [Día 14](kubernetes-journal/day-014/README.md) | Troubleshooting Nginx + PHP-FPM en Kubernetes | Completado |
 
 ## Progreso - Ansible
 
