@@ -147,6 +147,7 @@ El branch ya estaba en el remote — listo para crear el PR.
 - Crear PR
   
 ![Crear PR a mater con Tom como reviewer](image.png)
+![PR Creado](image-1.png)
 
 ### 6. Revisar y mergear como tom
 
@@ -156,60 +157,8 @@ El branch ya estaba en el remote — listo para crear el PR.
 - Revisar los cambios (diff)
 - Aprobar y mergear
 
-### 7. Sincronizar el repo local después del merge
-
-El merge ocurrió en el remote (Gitea). El repo local de `max` no se actualiza automáticamente — hay que traer los cambios:
-
-```bash
-git fetch --all
-```
-
-```
-From http://gitea:3000/sarah/story-blog
-   7252df6..49e6538  master     -> origin/master
-```
-
-```bash
-git checkout master
-```
-
-```
-Switched to branch 'master'
-Your branch is behind 'origin/master' by 2 commits, and can be fast-forwarded.
-  (use "git pull" to update your local branch)
-```
-
-```bash
-git pull origin master
-```
-
-```
-From http://gitea:3000/sarah/story-blog
- * branch            master     -> FETCH_HEAD
-Updating 7252df6..49e6538
-Fast-forward
- fox-and-grapes.txt | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
- create mode 100644 fox-and-grapes.txt
-```
-
-### 8. Verificar el log final
-
-```bash
-git log --oneline
-```
-
-```
-49e6538 (HEAD -> master, origin/master, origin/HEAD) Merge pull request 'Added fox-and-grapes story' (#1) from story/fox-and-grapes into master
-eea7877 (origin/story/fox-and-grapes, story/fox-and-grapes) Added fox-and-grapes story
-7252df6 Merge branch 'story/frogs-and-ox'
-e8179a8 Fix typo in story title
-c1ba4a6 Completed frogs-and-ox story
-118593d Added the lion and mouse story
-699f1ec Add incomplete frogs-and-ox story
-```
-
-El commit del PR (`49e6538`) aparece como merge commit en `master`. Los branches locales y remotos están sincronizados.
+![Revision de Tom](image-2.png)
+![PR mergeado](image-3.png)
 
 ## Troubleshooting
 
