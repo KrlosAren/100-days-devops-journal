@@ -357,6 +357,134 @@ En la salida verbose se puede ver:
 10. curl -Ik https://stapp03 → verificar HTTPS funciona
 ```
 
+## Self-Signed vs Let's Encrypt vs CA comercial
+
+En este ejercicio usamos un certificado **self-signed**. En produccion hay mejores opciones:
+
+| Tipo | Costo | Confianza | Renovacion | Caso de uso |
+|------|-------|-----------|------------|-------------|
+| **Self-signed** | Gratis | No (browsers muestran advertencia) | Manual | Labs, desarrollo, servicios internos |
+| **Let's Encrypt** | Gratis | Si (CA reconocida) | Automatica (90 dias) | Sitios web publicos |
+| **CA comercial** (DigiCert, Comodo) | $10-$1000+/ano | Si | Manual (1-2 anos) | Enterprise, EV certificates |
+
+### Let's Encrypt con Certbot
+
+[Let's Encrypt](https://letsencrypt.org/) es una CA gratuita y automatizada. **Certbot** es el cliente oficial para obtener y renovar certificados:
+
+```bash
+# Instalar Certbot en CentOS/RHEL
+sudo yum install -y epel-release
+sudo yum install -y certbot python3-certbot-nginx
+
+# En Debian/Ubuntu
+sudo apt install -y certbot python3-certbot-nginx
+```
+
+#### Obtener un certificado
+
+```bash
+# Certbot configura Nginx automaticamente
+sudo certbot --nginx -d midominio.com -d www.midominio.com
+```
+
+Certbot:
+1. Verifica que el dominio apunta al servidor (challenge HTTP o DNS)
+2. Obtiene el certificado de Let's Encrypt
+3. Modifica `nginx.conf` para agregar el bloque SSL automaticamente
+4. Recarga Nginx
+
+#### Renovacion automatica
+
+Los certificados de Let's Encrypt duran **90 dias**. Certbot instala un cron/timer para renovar automaticamente:
+
+```bash
+# Verificar que la renovacion automatica esta configurada
+sudo systemctl status certbot-renew.timer
+
+# Probar la renovacion (sin renovar de verdad)
+sudo certbot renew --dry-run
+```
+
+#### Donde guarda los certificados
+
+```
+/etc/letsencrypt/live/midominio.com/
+├── fullchain.pem    → Certificado completo (cert + chain)
+├── privkey.pem      → Clave privada
+├── cert.pem         → Solo el certificado
+└── chain.pem        → Certificados intermedios
+```
+
+En `nginx.conf`:
+
+```nginx
+ssl_certificate /etc/letsencrypt/live/midominio.com/fullchain.pem;
+ssl_certificate_key /etc/letsencrypt/live/midominio.com/privkey.pem;
+```
+
+#### Requisitos de Let's Encrypt
+
+| Requisito | Detalle |
+|-----------|---------|
+| Dominio publico | No funciona con IPs ni dominios internos |
+| Puerto 80 abierto | Certbot necesita responder al challenge HTTP |
+| DNS apuntando al servidor | El dominio debe resolver a la IP del servidor |
+
+Para dominios internos o sin acceso publico, se sigue usando self-signed o una CA interna.
+
+### Redireccion HTTP → HTTPS
+
+En produccion, todo el trafico HTTP debe redirigirse a HTTPS:
+
+```nginx
+# Bloque HTTP — redirige todo a HTTPS
+server {
+    listen 80;
+    server_name midominio.com www.midominio.com;
+    return 301 https://$host$request_uri;
+}
+
+# Bloque HTTPS — sirve el contenido
+server {
+    listen 443 ssl http2;
+    server_name midominio.com www.midominio.com;
+
+    ssl_certificate /etc/letsencrypt/live/midominio.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/midominio.com/privkey.pem;
+
+    root /usr/share/nginx/html;
+}
+```
+
+`return 301` envia una redireccion permanente al navegador. El cliente automaticamente cambia a HTTPS.
+
+### Headers de seguridad recomendados para HTTPS
+
+```nginx
+server {
+    listen 443 ssl http2;
+
+    # Forzar HTTPS por 1 ano (el browser recuerda y siempre usa HTTPS)
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+
+    # Prevenir clickjacking (no permitir iframes de otros sitios)
+    add_header X-Frame-Options "SAMEORIGIN" always;
+
+    # Prevenir MIME type sniffing
+    add_header X-Content-Type-Options "nosniff" always;
+
+    # Proteccion XSS basica
+    add_header X-XSS-Protection "1; mode=block" always;
+}
+```
+
+| Header | Proteccion |
+|--------|-----------|
+| `Strict-Transport-Security` (HSTS) | El browser siempre usa HTTPS, incluso si el usuario escribe `http://` |
+| `X-Frame-Options` | Previene que el sitio se cargue en un iframe (anti-clickjacking) |
+| `X-Content-Type-Options` | Previene que el browser adivine el tipo de archivo |
+| `X-XSS-Protection` | Activa el filtro XSS del browser |
+
 ## Troubleshooting
 
 | Problema | Solucion |

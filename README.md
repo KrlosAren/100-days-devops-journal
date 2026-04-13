@@ -29,6 +29,20 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 13](100-devops-days/day-013/README.md) | Implementar iptables para restringir acceso a Apache | Completado |
 | [Día 14](100-devops-days/day-014/README.md) | Troubleshooting de Apache: Servicio caido por conflicto de puerto | Completado |
 | [Día 15](100-devops-days/day-015/README.md) | Instalar y configurar Nginx con SSL (Self-Signed Certificate) | Completado |
+| [Día 16](100-devops-days/day-016/README.md) | Configurar Nginx como Load Balancer | Completado |
+| [Día 17](100-devops-days/day-017/README.md) | Configurar PostgreSQL: Crear usuario y base de datos | Completado |
+| [Día 18](100-devops-days/day-018/README.md) | Instalar y configurar LAMP Stack (Linux, Apache, MariaDB, PHP) | Completado |
+| [Día 19](100-devops-days/day-019/README.md) | Configurar Apache para servir múltiples sitios con Alias | Completado |
+| [Día 20](100-devops-days/day-020/README.md) | Configurar Nginx + PHP-FPM para servir una aplicacion PHP | Completado |
+| [Día 21](100-devops-days/day-021/README.md) | Crear un repositorio Git bare en un servidor | Completado |
+| [Día 22](100-devops-days/day-022/README.md) | Clonar un repositorio Git bare en el mismo servidor | Completado |
+| [Día 23](100-devops-days/day-023/README.md) | Fork de un repositorio Git en Gitea | Completado |
+| [Día 24](100-devops-days/day-024/README.md) | Crear branches en un repositorio Git | Completado |
+| [Día 25](100-devops-days/day-025/README.md) | Flujo completo de branch: crear, commitear, mergear y pushear | Completado |
+| [Día 26](100-devops-days/day-026/README.md) | Agregar un remote adicional en Git y pushear a él | Completado |
+| [Día 27](100-devops-days/day-027/README.md) | Revertir el último commit con git revert | Completado |
+| [Día 28](100-devops-days/day-028/README.md) | Cherry-pick: copiar un commit específico entre branches | Completado |
+| [Día 29](100-devops-days/day-029/README.md) | Flujo de Pull Request en Gitea: rama feature → master | Completado |
 
 ## Progreso - Kubernetes
 
