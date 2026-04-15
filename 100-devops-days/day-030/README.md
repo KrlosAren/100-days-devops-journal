@@ -141,25 +141,54 @@ nothing to commit, working tree clean
 # --soft: HEAD retrocede, pero los archivos de los commits eliminados
 #         quedan en staging listos para un nuevo commit
 git reset --soft a1c3e5d
+git status
 ```
 
-<!-- TODO(human): agrega aquí la salida esperada de `git status` y `git diff --cached` para --soft -->
+```
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified: data.txt
+        new file: test.txt
+```
+
+Los cambios de los commits eliminados aparecen en staging — listos para un `git commit` inmediato.
 
 ```bash
 # --mixed (default): HEAD retrocede, archivos quedan en working tree
 #                    pero no en staging
 git reset --mixed a1c3e5d
+git status
 ```
 
-<!-- TODO(human): agrega aquí la salida esperada de `git status` y `git diff` para --mixed -->
+```
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified: data.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        test.txt
+```
+
+Los archivos existen en el directorio pero Git no los tiene en staging — hay que hacer `git add` antes de poder commitear.
 
 ```bash
 # --hard: HEAD retrocede, working tree y staging quedan igual al commit
 #         destino — archivos de commits eliminados desaparecen
-git reset --hard a1c3e5d   ← el usado aquí
+git reset --hard a1c3e5d
+git status
 ```
 
-<!-- TODO(human): agrega aquí la salida esperada de `git status` para --hard -->
+```
+HEAD is now at a1c3e5d add data.txt file
+On branch master
+nothing to commit, working tree clean
+```
+
+El directorio queda identico al estado del commit destino. Los archivos de los commits eliminados no existen en ningún lado (salvo en `git reflog`).
 
 ## Troubleshooting
 
