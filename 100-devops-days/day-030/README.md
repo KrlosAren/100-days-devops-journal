@@ -141,15 +141,25 @@ nothing to commit, working tree clean
 # --soft: HEAD retrocede, pero los archivos de los commits eliminados
 #         quedan en staging listos para un nuevo commit
 git reset --soft a1c3e5d
+```
 
+<!-- TODO(human): agrega aquí la salida esperada de `git status` y `git diff --cached` para --soft -->
+
+```bash
 # --mixed (default): HEAD retrocede, archivos quedan en working tree
 #                    pero no en staging
 git reset --mixed a1c3e5d
+```
 
+<!-- TODO(human): agrega aquí la salida esperada de `git status` y `git diff` para --mixed -->
+
+```bash
 # --hard: HEAD retrocede, working tree y staging quedan igual al commit
 #         destino — archivos de commits eliminados desaparecen
 git reset --hard a1c3e5d   ← el usado aquí
 ```
+
+<!-- TODO(human): agrega aquí la salida esperada de `git status` para --hard -->
 
 ## Troubleshooting
 
