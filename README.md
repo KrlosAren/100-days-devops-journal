@@ -43,6 +43,7 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 27](100-devops-days/day-027/README.md) | Revertir el último commit con git revert | Completado |
 | [Día 28](100-devops-days/day-028/README.md) | Cherry-pick: copiar un commit específico entre branches | Completado |
 | [Día 29](100-devops-days/day-029/README.md) | Flujo de Pull Request en Gitea: rama feature → master | Completado |
+| [Día 30](100-devops-days/day-030/README.md) | Limpiar historial de commits con git reset | Completado |
 
 ## Progreso - Kubernetes
 
