@@ -45,6 +45,9 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 29](100-devops-days/day-029/README.md) | Flujo de Pull Request en Gitea: rama feature → master | Completado |
 | [Día 30](100-devops-days/day-030/README.md) | Limpiar historial de commits con git reset | Completado |
 | [Día 31](100-devops-days/day-031/README.md) | Restaurar un stash específico con git stash apply | Completado |
+| [Día 32](100-devops-days/day-032/README.md) | Rebase de feature branch sobre master | Completado |
+| [Día 33](100-devops-days/day-033/README.md) | Resolver conflictos de merge durante git pull --rebase | Completado |
+| [Día 34](100-devops-days/day-034/README.md) | Crear un post-update hook para tagging automático en Git | Completado |
 
 ## Progreso - Kubernetes
 
