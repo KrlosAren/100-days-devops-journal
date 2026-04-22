@@ -99,6 +99,6 @@ nav:
   - Ansible:
       - "Día 01 · Crear archivo vacío": ansible/day-001/README.md
       - "Día 02 · Instalar e iniciar httpd": ansible/day-002/README.md
-      - "Día 03 · —": ansible/day-003/README.md
+      - "Día 03 · Cambiar la configuración default de Ansible": ansible/day-003/README.md
       - "Día 04 · Copiar archivos a servidores": ansible/day-004/README.md
       - "Día 05 · Archivos con permisos específicos": ansible/day-005/README.md
