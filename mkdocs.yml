@@ -1,0 +1,104 @@
+site_name: 100 Days DevOps Journal
+site_description: Reto personal de 100 días aprendiendo DevOps en la práctica
+site_author: Carlos Lopez
+site_url: https://krlosaren.github.io/100-days-devops-journal/
+docs_dir: docs
+site_dir: site
+
+theme:
+  name: material
+  language: es
+  palette:
+    scheme: default
+    primary: orange
+    accent: deep orange
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.indexes
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+    - content.code.annotate
+    - navigation.footer
+    - navigation.path
+
+plugins:
+  - search:
+      lang: es
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - admonition
+  - pymdownx.details
+  - attr_list
+  - md_in_html
+
+nav:
+  - Inicio: index.md
+  - DevOps General:
+      - "Día 01 · Usuarios de servicio sin shell": devops/day-001/README.md
+      - "Día 02 · Usuario con fecha de expiración": devops/day-002/README.md
+      - "Día 03 · Deshabilitar SSH como root": devops/day-003/README.md
+      - "Día 04 · Permisos y propiedad de archivos": devops/day-004/README.md
+      - "Día 05 · SELinux": devops/day-005/README.md
+      - "Día 06 · Cron Job con Cronie": devops/day-006/README.md
+      - "Día 07 · SSH sin contraseña": devops/day-007/README.md
+      - "Día 08 · Instalar Ansible con pip3": devops/day-008/README.md
+      - "Día 09 · Troubleshooting MariaDB": devops/day-009/README.md
+      - "Día 10 · Script de backup": devops/day-010/README.md
+      - "Día 11 · Apache Tomcat": devops/day-011/README.md
+      - "Día 12 · Troubleshooting Apache + iptables": devops/day-012/README.md
+      - "Día 13 · iptables para restringir Apache": devops/day-013/README.md
+      - "Día 14 · Troubleshooting Apache: conflicto de puerto": devops/day-014/README.md
+      - "Día 15 · Nginx con SSL self-signed": devops/day-015/README.md
+      - "Día 16 · Nginx como Load Balancer": devops/day-016/README.md
+      - "Día 17 · PostgreSQL: usuario y base de datos": devops/day-017/README.md
+      - "Día 18 · LAMP Stack": devops/day-018/README.md
+      - "Día 19 · Apache: múltiples sitios con Alias": devops/day-019/README.md
+      - "Día 20 · Nginx + PHP-FPM": devops/day-020/README.md
+      - "Día 21 · Repositorio Git bare": devops/day-021/README.md
+      - "Día 22 · Clonar repositorio bare": devops/day-022/README.md
+      - "Día 23 · Fork en Gitea": devops/day-023/README.md
+      - "Día 24 · Crear branches en Git": devops/day-024/README.md
+      - "Día 25 · Flujo completo de branch": devops/day-025/README.md
+      - "Día 26 · Remote adicional en Git": devops/day-026/README.md
+      - "Día 27 · git revert": devops/day-027/README.md
+      - "Día 28 · git cherry-pick": devops/day-028/README.md
+      - "Día 29 · Pull Request en Gitea": devops/day-029/README.md
+      - "Día 30 · git reset: limpiar historial": devops/day-030/README.md
+      - "Día 31 · git stash apply": devops/day-031/README.md
+      - "Día 32 · git rebase sobre master": devops/day-032/README.md
+      - "Día 33 · Conflictos en git pull --rebase": devops/day-033/README.md
+      - "Día 34 · Hook post-update para tagging": devops/day-034/README.md
+      - "Día 35 · Instalar Docker CE": devops/day-035/README.md
+  - Kubernetes:
+      - "Día 01 · Crear un Pod": kubernetes/day-001/README.md
+      - "Día 02 · Crear un Deployment": kubernetes/day-002/README.md
+      - "Día 03 · Namespace y Pod": kubernetes/day-003/README.md
+      - "Día 04 · Resource Requests y Limits": kubernetes/day-004/README.md
+      - "Día 05 · Rolling Update": kubernetes/day-005/README.md
+      - "Día 06 · Rollback de Deployment": kubernetes/day-006/README.md
+      - "Día 07 · ReplicaSet con httpd": kubernetes/day-007/README.md
+      - "Día 08 · CronJob": kubernetes/day-008/README.md
+      - "Día 09 · Job Countdown": kubernetes/day-009/README.md
+      - "Día 10 · ConfigMap y Volume Mount": kubernetes/day-010/README.md
+      - "Día 11 · Troubleshooting ImagePullBackOff": kubernetes/day-011/README.md
+      - "Día 12 · Actualizar Deployment y Service": kubernetes/day-012/README.md
+      - "Día 13 · ReplicationController": kubernetes/day-013/README.md
+      - "Día 14 · Troubleshooting Nginx + PHP-FPM": kubernetes/day-014/README.md
+  - Ansible:
+      - "Día 01 · Crear archivo vacío": ansible/day-001/README.md
+      - "Día 02 · Instalar e iniciar httpd": ansible/day-002/README.md
+      - "Día 03 · —": ansible/day-003/README.md
+      - "Día 04 · Copiar archivos a servidores": ansible/day-004/README.md
+      - "Día 05 · Archivos con permisos específicos": ansible/day-005/README.md
