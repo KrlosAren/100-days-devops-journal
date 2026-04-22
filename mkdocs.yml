@@ -1,7 +1,7 @@
 site_name: 100 Days DevOps Journal
 site_description: Reto personal de 100 días aprendiendo DevOps en la práctica
 site_author: Carlos Lopez
-site_url: https://krlosaren.github.io/100-days-devops-journal/
+site_url: https://challenge.krlosaren.com
 docs_dir: docs
 site_dir: site
 
