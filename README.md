@@ -48,6 +48,7 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 32](100-devops-days/day-032/README.md) | Rebase de feature branch sobre master | Completado |
 | [Día 33](100-devops-days/day-033/README.md) | Resolver conflictos de merge durante git pull --rebase | Completado |
 | [Día 34](100-devops-days/day-034/README.md) | Crear un post-update hook para tagging automático en Git | Completado |
+| [Día 35](100-devops-days/day-035/README.md) | Instalar Docker CE e iniciar el servicio | Completado |
 
 ## Progreso - Kubernetes
 
