@@ -7,3 +7,4 @@
 5. que es node_exporter y como configurar
 6. como tener tu propio repositorio entender mas sobre git
 7. Git Rebase explicar y casos de uso
+8. como usar mkdocs + material y configurar un dominio

@@ -81,6 +81,7 @@ nav:
       - "Día 33 · Conflictos en git pull --rebase": devops/day-033/README.md
       - "Día 34 · Hook post-update para tagging": devops/day-034/README.md
       - "Día 35 · Instalar Docker CE": devops/day-035/README.md
+      - "Día 36 · Desplegar contenedor Nginx": devops/day-036/README.md
   - Kubernetes:
       - "Día 01 · Crear un Pod": kubernetes/day-001/README.md
       - "Día 02 · Crear un Deployment": kubernetes/day-002/README.md
