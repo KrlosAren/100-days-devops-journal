@@ -50,6 +50,7 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 34](100-devops-days/day-034/README.md) | Crear un post-update hook para tagging automático en Git | Completado |
 | [Día 35](100-devops-days/day-035/README.md) | Instalar Docker CE e iniciar el servicio | Completado |
 | [Día 36](100-devops-days/day-036/README.md) | Desplegar contenedor Nginx con Docker | Completado |
+| [Día 37](100-devops-days/day-037/README.md) | Copiar archivos a un contenedor con docker cp | Completado |
 
 ## Progreso - Kubernetes
 
