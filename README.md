@@ -51,6 +51,7 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 35](100-devops-days/day-035/README.md) | Instalar Docker CE e iniciar el servicio | Completado |
 | [Día 36](100-devops-days/day-036/README.md) | Desplegar contenedor Nginx con Docker | Completado |
 | [Día 37](100-devops-days/day-037/README.md) | Copiar archivos a un contenedor con docker cp | Completado |
+| [Día 38](100-devops-days/day-038/README.md) | Pull de imagen Docker y re-tagging | Completado |
 
 ## Progreso - Kubernetes
 

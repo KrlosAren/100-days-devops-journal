@@ -83,6 +83,7 @@ nav:
       - "Día 35 · Instalar Docker CE": devops/day-035/README.md
       - "Día 36 · Desplegar contenedor Nginx": devops/day-036/README.md
       - "Día 37 · Copiar archivos con docker cp": devops/day-037/README.md
+      - "Día 38 · Pull de imagen y re-tagging": devops/day-038/README.md
   - Kubernetes:
       - "Día 01 · Crear un Pod": kubernetes/day-001/README.md
       - "Día 02 · Crear un Deployment": kubernetes/day-002/README.md
