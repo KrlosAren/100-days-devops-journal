@@ -53,6 +53,7 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 37](100-devops-days/day-037/README.md) | Copiar archivos a un contenedor con docker cp | Completado |
 | [Día 38](100-devops-days/day-038/README.md) | Pull de imagen Docker y re-tagging | Completado |
 | [Día 39](100-devops-days/day-039/README.md) | Crear imagen Docker desde un contenedor | Completado |
+| [Día 40](100-devops-days/day-040/README.md) | Docker EXEC: instalar y configurar Apache en un contenedor | Completado |
 
 ## Progreso - Kubernetes
 
@@ -82,6 +83,12 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 03](ansible-journal/day-003/README.md) | — | Completado |
 | [Día 04](ansible-journal/day-004/README.md) | Copiar archivos a servidores de aplicación | Completado |
 | [Día 05](ansible-journal/day-005/README.md) | Crear archivos con permisos y propietario específico | Completado |
+
+## Herramientas
+
+| Herramienta | Descripción |
+|-------------|-------------|
+| [sed](tools/sed/README.md) | Stream Editor — sustitución, filtrado y edición de texto en línea de comandos |
 
 ## Estructura del repositorio
 
