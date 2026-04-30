@@ -22,7 +22,7 @@ sed 's/patrón/reemplazo/' archivo
 
 ---
 
-## Flags del comando s
+## Flags del comando **s**
 
 ```bash
 sed 's/patrón/reemplazo/flags'
@@ -154,20 +154,23 @@ sed 's#/etc/apache2#/etc/nginx#'
 
 ---
 
-## TODO(human)
-
 ## Casos de uso frecuentes en DevOps
 
 ```bash
 # Cambiar un puerto en un archivo de configuración
+sed -i 's/Listen 80/Listen 8080/' /etc/apache2/ports.conf
 
 # Comentar una línea que contiene un patrón
+sed -i 's/^def func/#def func/' /app/main.py
 
 # Descomentar una línea (eliminar el # inicial)
+sed -i 's/^#def func/def func/' /app/main.py
 
 # Reemplazar una variable de entorno en un archivo .env
+sed -i 's/^TAG=.*/TAG=production-latest/' /app/.env
 
 # Eliminar líneas en blanco y comentarios de un archivo
+sed -i '/^$/d; /^#/d' /etc/apache2/ports.conf
 ```
 
 ---

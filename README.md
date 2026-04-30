@@ -54,6 +54,7 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 38](100-devops-days/day-038/README.md) | Pull de imagen Docker y re-tagging | Completado |
 | [Día 39](100-devops-days/day-039/README.md) | Crear imagen Docker desde un contenedor | Completado |
 | [Día 40](100-devops-days/day-040/README.md) | Docker EXEC: instalar y configurar Apache en un contenedor | Completado |
+| [Día 41](100-devops-days/day-041/README.md) | Escribir un Dockerfile | Completado |
 
 ## Progreso - Kubernetes
 

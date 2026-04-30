@@ -86,6 +86,7 @@ nav:
       - "Día 38 · Pull de imagen y re-tagging": devops/day-038/README.md
       - "Día 39 · Crear imagen desde contenedor": devops/day-039/README.md
       - "Día 40 · Docker EXEC: Apache en contenedor": devops/day-040/README.md
+      - "Día 41 · Escribir un Dockerfile": devops/day-041/README.md
   - Kubernetes:
       - "Día 01 · Crear un Pod": kubernetes/day-001/README.md
       - "Día 02 · Crear un Deployment": kubernetes/day-002/README.md
