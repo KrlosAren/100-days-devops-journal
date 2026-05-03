@@ -57,6 +57,7 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 41](100-devops-days/day-041/README.md) | Escribir un Dockerfile | Completado |
 | [Día 42](100-devops-days/day-042/README.md) | Crear una Docker Network | Completado |
 | [Día 43](100-devops-days/day-043/README.md) | Docker Port Mapping | Completado |
+| [Día 44](100-devops-days/day-044/README.md) | Escribir un Docker Compose File | Completado |
 
 ## Progreso - Kubernetes
 
