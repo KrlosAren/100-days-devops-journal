@@ -22,6 +22,64 @@ sed 's/patrón/reemplazo/' archivo
 
 ---
 
+## Comillas simples vs dobles
+
+El patrón de `sed` se escribe entre comillas para que el shell lo pase como un solo argumento. **La elección de comillas no es sed: es el shell** — y cambia qué se expande antes de que `sed` reciba el patrón.
+
+| Comillas | Qué hace el shell antes de pasar el string a sed |
+|----------|--------------------------------------------------|
+| `'...'` (simples) | **Nada.** El contenido llega a sed exactamente como se escribió |
+| `"..."` (dobles) | Expande `$VAR`, `` `cmd` ``, `$(cmd)`, `\$`, `\"`, `\\`, `\` ` |
+
+### Regla práctica
+
+- **Por defecto, comillas simples.** Tu patrón de regex y tu reemplazo llegan tal cual a sed.
+- **Comillas dobles solo cuando necesitas interpolar una variable de shell** dentro del patrón.
+
+### Por qué importa: caracteres que el shell intercepta
+
+```bash
+# Patrón con $ (fin de línea en regex)
+sed 's/error$/ERROR/' archivo      # ✅ funciona — $ llega a sed
+sed "s/error$/ERROR/" archivo      # ❌ shell intenta expandir $/, da string vacío
+
+# Patrón con \n, \t (escapes que sed entiende)
+sed 's/foo\tbar/baz/' archivo      # ✅ \t llega a sed como literal "\t"
+sed "s/foo\tbar/baz/" archivo      # ⚠️ depende del shell — bash deja \t, otros lo procesan
+
+# Patrón con backticks (raro pero pasa)
+sed 's/`code`/CODE/' archivo       # ✅ backticks literales
+sed "s/`code`/CODE/" archivo       # ❌ shell intenta ejecutar `code` como comando
+```
+
+### Cuándo sí necesitas comillas dobles
+
+```bash
+# Interpolar una variable de shell
+PORT=8080
+sed -i "s/Listen 80/Listen $PORT/" /etc/apache2/ports.conf
+# El shell expande $PORT a 8080 antes de pasarlo a sed
+
+# Combinar: dobles para la parte variable, simples para la parte literal
+sed -i 's/Listen 80/Listen '"$PORT"'/' /etc/apache2/ports.conf
+# Cierra simples, abre dobles para $PORT, cierra dobles, reabre simples
+```
+
+### El error más común
+
+```bash
+# ❌ Quieres meter el valor de $TAG pero usaste simples
+sed -i 's/^TAG=.*/TAG=$TAG/' .env
+# Resultado: la línea queda literal como "TAG=$TAG", no como "TAG=v1.2.3"
+
+# ✅ Con dobles, $TAG se expande
+sed -i "s/^TAG=.*/TAG=$TAG/" .env
+```
+
+Si ves que tu sed "no expande la variable", el culpable casi siempre son las comillas simples.
+
+---
+
 ## Flags del comando **s**
 
 ```bash

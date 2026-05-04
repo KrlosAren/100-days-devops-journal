@@ -90,6 +90,7 @@ nav:
       - "Día 42 · Crear una Docker Network": devops/day-042/README.md
       - "Día 43 · Docker Port Mapping": devops/day-043/README.md
       - "Día 44 · Escribir un Docker Compose File": devops/day-044/README.md
+      - "Día 45 · Resolver errores en un Dockerfile": devops/day-045/README.md
   - Kubernetes:
       - "Día 01 · Crear un Pod": kubernetes/day-001/README.md
       - "Día 02 · Crear un Deployment": kubernetes/day-002/README.md
