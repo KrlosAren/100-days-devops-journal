@@ -60,6 +60,7 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 44](100-devops-days/day-044/README.md) | Escribir un Docker Compose File | Completado |
 | [Día 45](100-devops-days/day-045/README.md) | Resolver errores en un Dockerfile | Completado |
 | [Día 46](100-devops-days/day-046/README.md) | Desplegar PHP + MariaDB con Docker Compose | Completado |
+| [Día 47](100-devops-days/day-047/README.md) | Dockerizar una app Flask en Python | Completado |
 
 ## Progreso - Kubernetes
 

@@ -92,6 +92,7 @@ nav:
       - "Día 44 · Escribir un Docker Compose File": devops/day-044/README.md
       - "Día 45 · Resolver errores en un Dockerfile": devops/day-045/README.md
       - "Día 46 · Desplegar PHP + MariaDB con Compose": devops/day-046/README.md
+      - "Día 47 · Dockerizar una app Flask en Python": devops/day-047/README.md
   - Kubernetes:
       - "Día 01 · Crear un Pod": kubernetes/day-001/README.md
       - "Día 02 · Crear un Deployment": kubernetes/day-002/README.md
