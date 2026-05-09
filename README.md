@@ -62,6 +62,7 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 46](100-devops-days/day-046/README.md) | Desplegar PHP + MariaDB con Docker Compose | Completado |
 | [Día 47](100-devops-days/day-047/README.md) | Dockerizar una app Flask en Python | Completado |
 | [Día 48](100-devops-days/day-048/README.md) | Desplegar un Pod en un cluster de Kubernetes | Completado |
+| [Día 49](100-devops-days/day-049/README.md) | Desplegar aplicaciones con Deployments en Kubernetes | Completado |
 
 ## Progreso - Kubernetes
 

@@ -94,6 +94,7 @@ nav:
       - "Día 46 · Desplegar PHP + MariaDB con Compose": devops/day-046/README.md
       - "Día 47 · Dockerizar una app Flask en Python": devops/day-047/README.md
       - "Día 48 · Desplegar un Pod en Kubernetes": devops/day-048/README.md
+      - "Día 49 · Deployments en Kubernetes": devops/day-049/README.md
   - Kubernetes:
       - "Día 01 · Crear un Pod": kubernetes/day-001/README.md
       - "Día 02 · Crear un Deployment": kubernetes/day-002/README.md
