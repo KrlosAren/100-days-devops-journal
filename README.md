@@ -65,6 +65,7 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 49](100-devops-days/day-049/README.md) | Desplegar aplicaciones con Deployments en Kubernetes | Completado |
 | [Día 50](100-devops-days/day-050/README.md) | Resource Requests y Limits en Pods de Kubernetes | Completado |
 | [Día 51](100-devops-days/day-051/README.md) | Rolling Update en Kubernetes Deployments | Completado |
+| [Día 52](100-devops-days/day-052/README.md) | Rollback de un Deployment a la versión anterior | Completado |
 
 ## Progreso - Kubernetes
 

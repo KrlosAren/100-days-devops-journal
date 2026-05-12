@@ -97,6 +97,7 @@ nav:
       - "Día 49 · Deployments en Kubernetes": devops/day-049/README.md
       - "Día 50 · Resource Requests y Limits": devops/day-050/README.md
       - "Día 51 · Rolling Update en Deployments": devops/day-051/README.md
+      - "Día 52 · Rollback de un Deployment": devops/day-052/README.md
   - Kubernetes:
       - "Día 01 · Crear un Pod": kubernetes/day-001/README.md
       - "Día 02 · Crear un Deployment": kubernetes/day-002/README.md
