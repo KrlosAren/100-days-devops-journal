@@ -123,3 +123,4 @@ nav:
   - Herramientas:
       - "sed · Stream Editor": tools/sed/README.md
       - "git · Editar commits": tools/git/README.md
+      - "kubectl · Seleccionar y editar componentes": tools/kubectl/README.md
