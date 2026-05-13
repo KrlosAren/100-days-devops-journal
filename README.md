@@ -66,6 +66,7 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 50](100-devops-days/day-050/README.md) | Resource Requests y Limits en Pods de Kubernetes | Completado |
 | [Día 51](100-devops-days/day-051/README.md) | Rolling Update en Kubernetes Deployments | Completado |
 | [Día 52](100-devops-days/day-052/README.md) | Rollback de un Deployment a la versión anterior | Completado |
+| [Día 53](100-devops-days/day-053/README.md) | Troubleshooting: VolumeMount mal alineado en Nginx + PHP-FPM | Completado |
 
 ## Progreso - Kubernetes
 
