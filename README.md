@@ -67,6 +67,7 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 51](100-devops-days/day-051/README.md) | Rolling Update en Kubernetes Deployments | Completado |
 | [Día 52](100-devops-days/day-052/README.md) | Rollback de un Deployment a la versión anterior | Completado |
 | [Día 53](100-devops-days/day-053/README.md) | Troubleshooting: VolumeMount mal alineado en Nginx + PHP-FPM | Completado |
+| [Día 54](100-devops-days/day-054/README.md) | Shared Volumes en Kubernetes (emptyDir) | Completado |
 
 ## Progreso - Kubernetes
 
