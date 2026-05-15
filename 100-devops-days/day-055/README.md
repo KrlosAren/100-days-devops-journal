@@ -218,36 +218,107 @@ Cuatro confirmaciones críticas del patrón native sidecar:
 
 Para que aparezcan logs hay que pegarle a nginx. Como el Pod no tiene Service, le pegamos desde adentro del Pod:
 
-```bash
-# Una alternativa: port-forward al puerto 80 del nginx
-kubectl port-forward pod/webserver 8080:80 &
-curl http://localhost:8080/
-curl http://localhost:8080/no-existe   # genera un 404 que va a error.log
+#### Gotcha: `ubuntu:latest` no trae `curl`
 
-# O directamente desde el container con curl interno:
-kubectl exec -it webserver -c nginx-container -- sh -c "apt update && apt install -y curl && curl localhost/"
-```
-
-Ahora ver lo que el sidecar está catteando:
+Primer intento — pegarle al nginx desde el propio sidecar (que es Ubuntu):
 
 ```bash
-kubectl logs webserver -c sidecar-container
+kubectl exec -it pod/webserver -c sidecar-container -n test-system -- sh -c "curl localhost"
 ```
 
-Esperado (con un cycle del `while`):
-
 ```
-10.244.0.1 - - [14/May/2026:13:10:23 +0000] "GET / HTTP/1.1" 200 615 "-" "curl/8.4.0" "-"
-10.244.0.1 - - [14/May/2026:13:10:25 +0000] "GET /no-existe HTTP/1.1" 404 153 "-" "curl/8.4.0" "-"
-2026/05/14 13:10:25 [error] 30#30: *2 open() "/usr/share/nginx/html/no-existe" failed (2: No such file or directory), client: 10.244.0.1, ...
+sh: 1: curl: not found
+command terminated with exit code 127
 ```
 
-El sidecar imprime cada 30s el contenido completo del `access.log` y `error.log`. En producción real esto sería streaming hacia un agregador (Loki, Cloudwatch, Elasticsearch).
+La imagen oficial `ubuntu:latest` es mínima y no incluye `curl`. Opciones para resolverlo:
 
-> **Stream vivo de los logs:**
-> ```bash
-> kubectl logs -f webserver -c sidecar-container
-> ```
+- **Instalarlo en runtime** (`apt update && apt install -y curl`), pero es ad-hoc y se pierde al primer restart
+- **Hacer la request desde el otro container** del Pod (`nginx:latest` sí trae curl)
+- **Para producción**: construir una imagen propia derivada de Ubuntu con las tools necesarias instaladas en build time
+
+Acá usamos la opción 2 (más rápida para el lab):
+
+```bash
+kubectl exec -it pod/webserver -c nginx-container -n test-system -- sh -c "curl localhost"
+```
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+...
+```
+
+Repetir varias veces para acumular access logs, y luego una request a un path inexistente para generar también error logs:
+
+```bash
+kubectl exec -it pod/webserver -c nginx-container -n test-system -- sh -c "curl localhost/hola"
+```
+
+```html
+<html>
+<head><title>404 Not Found</title></head>
+<body>
+<center><h1>404 Not Found</h1></center>
+<hr><center>nginx/1.31.0</center>
+</body>
+</html>
+```
+
+> **¿Por qué `::1` (IPv6 localhost) y no `127.0.0.1`?** En containers Linux modernos, `localhost` resuelve primero a `::1`. nginx loguea la IP de origen tal como vino, por eso los logs muestran `::1`.
+
+#### Leer los logs desde el sidecar
+
+El sidecar tiene el mismo `/var/log/nginx` montado, así que ve los archivos generados por nginx en tiempo real:
+
+```bash
+kubectl exec -it pod/webserver -c sidecar-container -n test-system \
+  -- sh -c "cat /var/log/nginx/access.log"
+```
+
+```
+::1 - - [15/May/2026:12:38:54 +0000] "GET / HTTP/1.1" 200 896 "-" "curl/8.14.1" "-"
+::1 - - [15/May/2026:12:38:55 +0000] "GET / HTTP/1.1" 200 896 "-" "curl/8.14.1" "-"
+::1 - - [15/May/2026:12:38:56 +0000] "GET / HTTP/1.1" 200 896 "-" "curl/8.14.1" "-"
+::1 - - [15/May/2026:12:38:57 +0000] "GET / HTTP/1.1" 200 896 "-" "curl/8.14.1" "-"
+::1 - - [15/May/2026:12:39:00 +0000] "GET /hola HTTP/1.1" 404 153 "-" "curl/8.14.1" "-"
+::1 - - [15/May/2026:12:39:01 +0000] "GET /hola HTTP/1.1" 404 153 "-" "curl/8.14.1" "-"
+```
+
+```bash
+kubectl exec -it pod/webserver -c sidecar-container -n test-system \
+  -- sh -c "cat /var/log/nginx/error.log"
+```
+
+```
+2026/05/15 12:37:58 [notice] 1#1: using the "epoll" event method
+2026/05/15 12:37:58 [notice] 1#1: nginx/1.31.0
+2026/05/15 12:37:58 [notice] 1#1: built by gcc 14.2.0 (Debian 14.2.0-19)
+2026/05/15 12:37:58 [notice] 1#1: OS: Linux 6.17.0-1011-raspi
+2026/05/15 12:37:58 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2026/05/15 12:37:58 [notice] 1#1: start worker processes
+2026/05/15 12:37:58 [notice] 1#1: start worker process 29
+2026/05/15 12:39:00 [error] 29#29: *5 open() "/usr/share/nginx/html/hola" failed (2: No such file or directory), client: ::1, server: localhost, request: "GET /hola HTTP/1.1", host: "localhost"
+2026/05/15 12:39:01 [error] 29#29: *6 open() "/usr/share/nginx/html/hola" failed (2: No such file or directory), client: ::1, server: localhost, request: "GET /hola HTTP/1.1", host: "localhost"
+```
+
+Confirmaciones:
+
+- El sidecar **ve los logs que nginx generó** — el volumen compartido funciona como se esperaba
+- El `access.log` muestra los timestamps correlacionados con los `curl` que disparamos: 4 a `/` con 200, 2 a `/hola` con 404
+- El `error.log` muestra dos fases distintas: las líneas de `[notice]` son el **startup de nginx** (workers PID, versión, kernel del nodo), y las de `[error]` son los 404 que generamos pidiendo el path inexistente
+
+#### Versión alternativa: leer la stdout del sidecar
+
+El sidecar tiene un `while true; do cat ...; sleep 30; done` que imprime a stdout, lo cual `kubectl logs` captura:
+
+```bash
+kubectl logs -f webserver -c sidecar-container -n test-system
+```
+
+Cada 30s el sidecar re-imprime el contenido entero de los dos archivos. En producción real esto sería streaming hacia un agregador (Loki, Cloudwatch, Elasticsearch); el `cat` en loop es solo educativo.
 
 ### Versión "compat" (sin native sidecar)
 
