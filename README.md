@@ -69,6 +69,7 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 53](100-devops-days/day-053/README.md) | Troubleshooting: VolumeMount mal alineado en Nginx + PHP-FPM | Completado |
 | [Día 54](100-devops-days/day-054/README.md) | Shared Volumes en Kubernetes (emptyDir) | Completado |
 | [Día 55](100-devops-days/day-055/README.md) | Sidecar Containers (patrón native con initContainers) | Completado |
+| [Día 56](100-devops-days/day-056/README.md) | Deployment + Service NodePort para nginx | Completado |
 
 ## Progreso - Kubernetes
 

@@ -101,6 +101,7 @@ nav:
       - "Día 53 · Troubleshooting VolumeMounts en Nginx + PHP-FPM": devops/day-053/README.md
       - "Día 54 · Shared Volumes (emptyDir)": devops/day-054/README.md
       - "Día 55 · Sidecar Containers (native pattern)": devops/day-055/README.md
+      - "Día 56 · Deployment + Service NodePort": devops/day-056/README.md
   - Kubernetes:
       - "Día 01 · Crear un Pod": kubernetes/day-001/README.md
       - "Día 02 · Crear un Deployment": kubernetes/day-002/README.md
