@@ -70,6 +70,7 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 54](100-devops-days/day-054/README.md) | Shared Volumes en Kubernetes (emptyDir) | Completado |
 | [Día 55](100-devops-days/day-055/README.md) | Sidecar Containers (patrón native con initContainers) | Completado |
 | [Día 56](100-devops-days/day-056/README.md) | Deployment + Service NodePort para nginx | Completado |
+| [Día 57](100-devops-days/day-057/README.md) | Variables de entorno en Pods y `$(VAR)` substitution | Completado |
 
 ## Progreso - Kubernetes
 
