@@ -105,6 +105,7 @@ nav:
       - "Día 57 · Variables de entorno y $(VAR) substitution": devops/day-057/README.md
       - "Día 58 · Deployment Grafana + autopsia de labels": devops/day-058/README.md
       - "Día 59 · Troubleshooting Deployment (image + ConfigMap typo)": devops/day-059/README.md
+      - "Día 60 · Persistent Volumes (PV + PVC + Pod + Service)": devops/day-060/README.md
   - Kubernetes:
       - "Día 01 · Crear un Pod": kubernetes/day-001/README.md
       - "Día 02 · Crear un Deployment": kubernetes/day-002/README.md

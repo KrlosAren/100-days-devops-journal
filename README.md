@@ -73,6 +73,7 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 57](100-devops-days/day-057/README.md) | Variables de entorno en Pods y `$(VAR)` substitution | Completado |
 | [Día 58](100-devops-days/day-058/README.md) | Deployment Grafana — autopsia de labels y selectors | Completado |
 | [Día 59](100-devops-days/day-059/README.md) | Troubleshooting Deployment: typo en image + ConfigMap inexistente | Completado |
+| [Día 60](100-devops-days/day-060/README.md) | Persistent Volumes en Kubernetes (PV + PVC + Pod + Service) | Completado |
 
 ## Progreso - Kubernetes
 
