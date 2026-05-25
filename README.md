@@ -76,6 +76,7 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 60](100-devops-days/day-060/README.md) | Persistent Volumes en Kubernetes (PV + PVC + Pod + Service) | Completado |
 | [Día 61](100-devops-days/day-061/README.md) | Init Containers en Kubernetes | Completado |
 | [Día 62](100-devops-days/day-062/README.md) | Manejo de Secrets en Kubernetes | Completado |
+| [Día 63](100-devops-days/day-063/README.md) | Deploy Iron Gallery — stack multi-componente (app + DB + 2 services + namespace) | Completado |
 
 ## Progreso - Kubernetes
 
