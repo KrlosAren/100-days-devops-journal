@@ -77,6 +77,8 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 61](100-devops-days/day-061/README.md) | Init Containers en Kubernetes | Completado |
 | [Día 62](100-devops-days/day-062/README.md) | Manejo de Secrets en Kubernetes | Completado |
 | [Día 63](100-devops-days/day-063/README.md) | Deploy Iron Gallery — stack multi-componente (app + DB + 2 services + namespace) | Completado |
+| [Día 64](100-devops-days/day-064/README.md) | Troubleshooting Python Flask en K8s — dos bugs simultáneos (image typo + port mismatch) | Completado |
+| [Día 65](100-devops-days/day-065/README.md) | Deploy de Redis en K8s con ConfigMap montado como volumen | Completado |
 
 ## Progreso - Kubernetes
 

@@ -109,6 +109,8 @@ nav:
       - "Día 61 · Init Containers en Kubernetes": devops/day-061/README.md
       - "Día 62 · Manejo de Secrets en Kubernetes": devops/day-062/README.md
       - "Día 63 · Deploy Iron Gallery (stack multi-componente)": devops/day-063/README.md
+      - "Día 64 · Troubleshooting Python Flask en K8s (dos bugs simultáneos)": devops/day-064/README.md
+      - "Día 65 · Deploy de Redis con ConfigMap": devops/day-065/README.md
   - Kubernetes:
       - "Día 01 · Crear un Pod": kubernetes/day-001/README.md
       - "Día 02 · Crear un Deployment": kubernetes/day-002/README.md
