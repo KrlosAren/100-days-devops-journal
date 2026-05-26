@@ -282,12 +282,9 @@ kubectl patch svc python-service-datacenter --type='json' -p='[
 
 ## Reflexión: troubleshooting bajo síntomas que se enmascaran
 
-<!-- TODO(human): Reflexión personal sobre el lab. Posibles direcciones:
-- La trampa cognitiva de tener dos bugs simultáneos: cuando arreglás el primero y "nada cambia", la tentación es deshacerlo y probar otra cosa. ¿Te pasó? ¿Cómo lo manejaste?
-- Tu workflow habitual al debuggear K8s — ¿cuál es tu primer comando? (kubectl get pods, kubectl describe, kubectl logs, kubectl get events)
-- El balance entre kubectl edit (rápido, sin auditoría) y editar el YAML + apply (más lento, queda registrado). ¿En qué contextos elegís cuál?
-- Si comparás este lab con el Día 59 (otro troubleshooting de dos bugs), ¿qué te resulta más familiar ya — qué patrones empezás a reconocer al primer vistazo?
-2-10 líneas, tono directo, primera persona implícita como en Día 61, 62 y 63. -->
+Dos errores que **fácilmente pasan desapercibidos** pueden ser frustrantes al inicio, pero a medida que se toma experiencia se gana seguridad para resistir la tentación de "deshacer" un fix que en realidad está bien. En este lab, el primer cambio (corregir el `port` / `targetPort` del Service) **lo tenía super claro que estaba bien** — el container expone `5000`, el Service apuntaba a `8080`, no había duda. Lo que hice al ver que el Pod seguía sin arrancar fue **buscar el segundo bug en vez de revertir el primero**, y eso me llevó a detectar el typo en el `image`. La regla mental que queda: **si un fix está conceptualmente correcto y el síntoma no mejora, asumir que hay otra causa enmascarándolo**, no deshacer.
+
+**Leer los eventos del cluster** es una herramienta fantástica que se puede aprovechar de mil maneras — más allá de los typos, los eventos cuentan la historia cronológica del scheduling, los pulls de imagen, los reinicios, las evictions. A partir de acá voy a buscar herramientas que ayuden día a día a resolver este tipo de problemas; al ser K8s open source seguro existen utilidades poderosas para debug que valen la pena explorar (cosas como `k9s`, `stern` para logs agregados, `kubectl-debug`, `kubespy` para watching).
 
 ## Troubleshooting
 
