@@ -31,7 +31,7 @@ Por eso el rollback **también es gradual y sin downtime**: si tu rolling update
 | Comando                                                          | Qué hace                                                              |
 | ---------------------------------------------------------------- | --------------------------------------------------------------------- |
 | `kubectl rollout undo deployment/<name>`                         | Rollback a la revisión **inmediatamente anterior**                    |
-| `kubectl rollout undo deployment/<name> --to-revision=N`         | Rollback a una revisión específica (útil si querés saltar 2+ atrás)   |
+| `kubectl rollout undo deployment/<name> --to-revision=N`         | Rollback a una revisión específica (útil para saltar 2+ atrás)        |
 | `kubectl rollout history deployment/<name>`                      | Lista revisiones disponibles con su `CHANGE-CAUSE`                    |
 | `kubectl rollout history deployment/<name> --revision=N`         | Ver el Pod Template de una revisión específica antes de hacer rollback |
 | `kubectl rollout undo deployment/<name> --dry-run=client -o yaml`| Preview de la operación sin ejecutarla (poco común pero útil en CI/CD)|
@@ -40,7 +40,7 @@ Por eso el rollback **también es gradual y sin downtime**: si tu rolling update
 
 Esta es la parte que confunde a casi todo el mundo la primera vez:
 
-Si tenés revisiones `1` (buena) y `2` (con bug, current), y hacés `kubectl rollout undo`:
+Con revisiones `1` (buena) y `2` (con bug, current), al ejecutar `kubectl rollout undo`:
 
 ```
 Antes:                              Después del undo:
@@ -52,7 +52,7 @@ REVISION  CHANGE-CAUSE              REVISION  CHANGE-CAUSE
 
 La revisión "1" **no se eliminó** — es el mismo ReplicaSet (`nginx-deployment-fc677cbc9`), pero K8s le actualizó el annotation `deployment.kubernetes.io/revision` de `1` a `3`. La revisión 2 (con bug) sigue ahí como historial.
 
-Por qué: cada ReplicaSet tiene una sola revisión, así que cuando "reactivás" el RS viejo, K8s necesita marcarlo como la latest — y la única forma de hacer eso es subir su número de revisión arriba de la actual.
+Por qué: cada ReplicaSet tiene una sola revisión, así que al "reactivar" el RS viejo, K8s necesita marcarlo como la latest — y la única forma de hacer eso es subir su número de revisión arriba de la actual.
 
 ### `--record` y `kubernetes.io/change-cause`
 
@@ -134,7 +134,7 @@ La revisión `1` no tiene `CHANGE-CAUSE` (creación inicial del deployment, no s
 
 ### 3. (Recomendado) Inspeccionar la revisión target antes de rollear
 
-Antes de cualquier rollback en producción, vale la pena confirmar **qué imagen** tiene la revisión a la que vas:
+Antes de cualquier rollback en producción, vale la pena confirmar **qué imagen** tiene la revisión destino:
 
 ```bash
 kubectl rollout history deployment/nginx-deployment --revision=1
@@ -149,7 +149,7 @@ Pod Template:
     Image:      nginx:1.16
 ```
 
-Confirmado: vamos a volver a `nginx:1.16`. Esto te protege de errores comunes: "creí que la revisión anterior era la X pero en realidad era la Y".
+Confirmado: el rollback va a `nginx:1.16`. Esto protege de errores comunes: "creí que la revisión anterior era la X pero en realidad era la Y".
 
 ### 4. Ejecutar el rollback
 
@@ -173,7 +173,7 @@ kubectl rollout undo deployment/nginx-deployment --to-revision=1
 deployment.apps/nginx-deployment rolled back
 ```
 
-> **Cuándo usar cada una:** si querés ir solo "un paso atrás", la opción A es más simple y resistente a errores. Si hay más de 2 revisiones y querés saltar varios atrás (ej: revisión 5 con bug, querés volver a 2 saltando 3 y 4), `--to-revision=N` es obligatorio. En este lab cualquiera de las dos funciona porque solo hay 2 revisiones.
+> **Cuándo usar cada una:** para ir solo "un paso atrás", la opción A es más simple y resistente a errores. Si hay más de 2 revisiones y se quiere saltar varios atrás (ej: revisión 5 con bug, volver a 2 saltando 3 y 4), `--to-revision=N` es obligatorio. En este lab cualquiera de las dos funciona porque solo hay 2 revisiones.
 
 ### 5. Monitorear el rollback
 
@@ -185,7 +185,7 @@ kubectl rollout status deployment/nginx-deployment
 deployment "nginx-deployment" successfully rolled out
 ```
 
-(Acá ya estaba terminado al consultar — si lo corrés mientras está activo aparecen líneas tipo `Waiting for deployment ... 1 old replicas are pending termination...`.)
+(Acá ya estaba terminado al consultar — al correrlo mientras está activo aparecen líneas tipo `Waiting for deployment ... 1 old replicas are pending termination...`.)
 
 ### 6. Verificar que volvimos a la imagen correcta
 
@@ -253,12 +253,12 @@ nginx-deployment-fc677cbc9-lq7sj   1/1     Running   0          5m25s   10.22.0.
 nginx-deployment-fc677cbc9-xbx8s   1/1     Running   0          5m24s   10.22.0.16   jump-host
 ```
 
-Los 3 pods ahora tienen hash `fc677cbc9` (el RS reactivado). Compará con la pre-rollback: los pods de antes tenían hash `6c744d9dd6` (el RS con bug).
+Los 3 pods ahora tienen hash `fc677cbc9` (el RS reactivado). Comparar con la pre-rollback: los pods de antes tenían hash `6c744d9dd6` (el RS con bug).
 
 > **Detalle no obvio — el hash `fc677cbc9` se reutilizó:**
 > El `pod-template-hash` no es aleatorio: se calcula como un hash determinístico del Pod Template. Misma template (mismas labels, misma `image: nginx:1.16`) = mismo hash. Por eso K8s **no creó un RS nuevo** durante el rollback — encontró que el hash de la template coincidía con un RS ya existente (`fc677cbc9`, que estaba en 0 replicas) y simplemente lo reactivó.
 >
-> Implicación práctica: si volvieras a hacer `kubectl set image ... nginx:stable` ahora, K8s reutilizaría el RS `6c744d9dd6` (no crearía uno nuevo) porque el hash de esa template también sigue siendo el mismo. Es por eso que las revisiones de Deployments son tan baratas: K8s no acumula RSs basura, solo los que tienen Pod Templates distintos.
+> Implicación práctica: al volver a hacer `kubectl set image ... nginx:stable` ahora, K8s reutilizaría el RS `6c744d9dd6` (no crearía uno nuevo) porque el hash de esa template también sigue siendo el mismo. Es por eso que las revisiones de Deployments son tan baratas: K8s no acumula RSs basura, solo los que tienen Pod Templates distintos.
 
 ## Cómo se ve el flip-flop a nivel de ReplicaSets
 
@@ -283,9 +283,9 @@ El RS no se borra ni se recrea — solo cambian sus replicas y sus annotations. 
 | `error: unable to find specified revision N`                              | La revisión ya no existe en el historial — fue purgada por `revisionHistoryLimit`. Revisar `kubectl rollout history` para ver las disponibles  |
 | `rollout undo` ejecuta pero el bug sigue apareciendo                      | El bug no estaba en la imagen sino en config (ConfigMap, Secret, env var) que no es parte del Pod Template. El rollback no toca eso             |
 | Después del undo `rollout history` muestra revisiones renumeradas raras   | Comportamiento normal — la revisión a la que rolleaste se renumera al máximo + 1 (ver sección "La trampa de la renumeración")                  |
-| `CHANGE-CAUSE: <none>` en la revisión a la que querés volver              | Nadie anotó la revisión cuando se creó. Para futuras: usar `kubectl annotate ... kubernetes.io/change-cause="..."` después de cada cambio        |
+| `CHANGE-CAUSE: <none>` en la revisión destino del rollback                | Nadie anotó la revisión cuando se creó. Para futuras: usar `kubectl annotate ... kubernetes.io/change-cause="..."` después de cada cambio        |
 | Rollback "trabado": `rollout status` no avanza                            | El RS viejo no logra escalar — típicamente porque la imagen ya no está en el registry (fue borrada del repo). Verificar con `describe pod`     |
-| Borraste manualmente un RS viejo y ahora no podés rollear                 | El RS viejo se necesita para rollback. Para reconstruir hay que editar el YAML del deployment con la imagen anterior y `kubectl apply`         |
+| Se borró manualmente un RS viejo y ahora no se puede rollear              | El RS viejo se necesita para rollback. Para reconstruir hay que editar el YAML del deployment con la imagen anterior y `kubectl apply`         |
 
 ## Recursos
 

@@ -47,7 +47,7 @@ Para una app crítica con muchos replicas a veces se baja a `maxUnavailable: 0` 
 
 ### `Deployment` → `ReplicaSet` → `Pod`: por qué importan las revisiones
 
-Cada vez que cambiás algo del Pod Template, el Deployment crea **un ReplicaSet nuevo** con un `pod-template-hash` distinto. Por eso vas a ver pods como `nginx-deployment-fc677cbc9-9846v` (hash del RS viejo) y después `nginx-deployment-<otro-hash>-xxxxx` (hash del RS nuevo).
+Cada cambio del Pod Template hace que el Deployment cree **un ReplicaSet nuevo** con un `pod-template-hash` distinto. Por eso aparecen pods como `nginx-deployment-fc677cbc9-9846v` (hash del RS viejo) y después `nginx-deployment-<otro-hash>-xxxxx` (hash del RS nuevo).
 
 `kubectl rollout history` te muestra esa cadena de ReplicaSets — cada uno es una revisión. `kubectl rollout undo` no hace magia: simplemente escala al RS de la revisión anterior y baja el actual.
 
@@ -141,17 +141,17 @@ kubectl rollout status deployment/nginx-deployment
 deployment "nginx-deployment" successfully rolled out
 ```
 
-Si lo corrés mientras está activo, mostraría líneas tipo `Waiting for deployment ... 1 out of 3 new replicas have been updated...`. Acá ya estaba terminado, por eso salió la línea final directamente.
+Al correrlo mientras está activo, mostraría líneas tipo `Waiting for deployment ... 1 out of 3 new replicas have been updated...`. Acá ya estaba terminado, por eso salió la línea final directamente.
 
 Este comando es **bloqueante**: se queda esperando hasta que el rollout termina o falla. En CI/CD se usa como gate después de un deploy para confirmar éxito antes de seguir.
 
-Si querés ver en vivo cómo entran y salen los pods:
+Para ver en vivo cómo entran y salen los pods:
 
 ```bash
 kubectl get pods -w
 ```
 
-Vas a ver cómo van apareciendo pods con un hash distinto (`nginx-deployment-<hash-nuevo>-xxxxx`) y desapareciendo los viejos.
+Aparecen pods con un hash distinto (`nginx-deployment-<hash-nuevo>-xxxxx`) y desaparecen los viejos.
 
 ### 4. Confirmar que el update terminó
 
@@ -166,7 +166,7 @@ nginx-deployment-79b79679fc-k5clr   1/1     Running   0          9m20s
 nginx-deployment-79b79679fc-rcktq   1/1     Running   0          9m15s
 ```
 
-Los 3 pods ahora tienen el hash `79b79679fc` (del ReplicaSet nuevo). Compará con el inicial, donde todos tenían hash `fc677cbc9`. Esa diferencia de hash es la huella visible del rolling update.
+Los 3 pods ahora tienen el hash `79b79679fc` (del ReplicaSet nuevo). Comparar con el inicial, donde todos tenían hash `fc677cbc9`. Esa diferencia de hash es la huella visible del rolling update.
 
 Inspección completa del Deployment:
 
@@ -247,13 +247,13 @@ Pod Template:
     Image:      nginx:1.18
 ```
 
-> **Tip — `CHANGE-CAUSE`:** podés anotar cada update para que `rollout history` lo muestre, agregando la anotación `kubernetes.io/change-cause`:
+> **Tip — `CHANGE-CAUSE`:** se puede anotar cada update para que `rollout history` lo muestre, agregando la anotación `kubernetes.io/change-cause`:
 >
 > ```bash
 > kubectl annotate deployment/nginx-deployment kubernetes.io/change-cause="Update to nginx 1.18 for CVE patches"
 > ```
 >
-> Hacelo **después** del `set image`, no antes — la anotación viaja con la revisión actual.
+> Aplicar **después** del `set image`, no antes — la anotación viaja con la revisión actual.
 
 ### Cómo deshacer (si algo sale mal)
 
@@ -269,7 +269,7 @@ kubectl rollout undo deployment/nginx-deployment --to-revision=1
 
 ## Qué pasa por debajo durante el rolling update
 
-Si corrés `kubectl get rs` mientras el update está en curso vas a ver **dos ReplicaSets coexistiendo**:
+Al correr `kubectl get rs` mientras el update está en curso aparecen **dos ReplicaSets coexistiendo**:
 
 ```
 NAME                          DESIRED   CURRENT   READY   AGE
@@ -296,9 +296,9 @@ Lo que muestra esto:
 - **A partir del segundo `8m28s` los pares van juntos**: scale-down del viejo + scale-up del nuevo en el mismo timestamp. Esto solo pasa cuando el primer pod nuevo ya está `Ready` — ahí K8s gana confianza para mover los pares en paralelo.
 - **Duración total: ~7 segundos** (8m33s → 8m26s). El rolling update completo de 3 pods de nginx es casi instantáneo porque la imagen ya estaba cacheada en el nodo y nginx arranca rápido. Una app Java o un container con muchas migraciones podría tardar minutos.
 
-El gating en cada paso es el **readiness probe**: si el pod nuevo nunca queda `Ready`, el rollout se traba (no avanza, no rompe). Por eso tener readiness probes bien configuradas es lo que hace seguro al rolling update — sin ellas, Kubernetes asume `Ready=true` apenas el proceso arranca, y podés terminar reemplazando pods sanos por pods rotos sin darte cuenta.
+El gating en cada paso es el **readiness probe**: si el pod nuevo nunca queda `Ready`, el rollout se traba (no avanza, no rompe). Por eso tener readiness probes bien configuradas es lo que hace seguro al rolling update — sin ellas, Kubernetes asume `Ready=true` apenas el proceso arranca, y se puede terminar reemplazando pods sanos por pods rotos sin notarlo.
 
-> **Detalle a notar en este lab:** el Deployment **no tiene readiness probe configurado** (mirá el `Pod Template` en el describe — no aparece ningún `Readiness` ni `Liveness`). Por eso el update fue tan rápido: K8s consideró cada pod `Ready` apenas arrancó, sin verificar nada. En producción esto sería riesgoso — para nginx serviría algo tipo `httpGet /` en el puerto 80.
+> **Detalle a notar en este lab:** el Deployment **no tiene readiness probe configurado** (ver el `Pod Template` en el describe — no aparece ningún `Readiness` ni `Liveness`). Por eso el update fue tan rápido: K8s consideró cada pod `Ready` apenas arrancó, sin verificar nada. En producción esto sería riesgoso — para nginx serviría algo tipo `httpGet /` en el puerto 80.
 
 ## Troubleshooting
 

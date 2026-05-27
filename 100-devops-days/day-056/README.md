@@ -27,7 +27,7 @@ Resumen: **el Pod es el ladrillo, el Deployment es el albañil**. El Pod es la u
 
 > Una analogía útil: un Pod es como un proceso en Linux. Si crashea, no resucita solo — alguien tiene que reiniciarlo (`systemd`, `supervisor`, etc.). El Deployment es ese "supervisor": observa los Pods, y si nota que faltan replicas, crea más.
 
-### Self-healing: ¿qué pasa cuando matás un Pod del Deployment?
+### Self-healing: ¿qué pasa cuando se mata un Pod del Deployment?
 
 ```bash
 kubectl delete pod nginx-deployment-abc123
@@ -57,9 +57,9 @@ Deployment: nginx-deployment (spec.replicas=3, declara qué quiero)
 - **ReplicaSet** controla *cuántos Pods existen*: crea/borra Pods para llegar al número
 - **Pod** es la *unidad ejecutable*: un grupo de containers corriendo en un nodo
 
-La relación es por `ownerReferences`. Si borrás el Deployment, K8s borra en cascada los ReplicaSets, y esos borran sus Pods. Si borrás solo el ReplicaSet, sus Pods se borran (pero el Deployment crea uno nuevo).
+La relación es por `ownerReferences`. Al borrar el Deployment, K8s borra en cascada los ReplicaSets, y esos borran sus Pods. Al borrar solo el ReplicaSet, sus Pods se borran (pero el Deployment crea uno nuevo).
 
-> **¿Por qué existe la capa ReplicaSet?** Para que el rolling update funcione. Cada vez que cambiás el Pod Template (ej: `set image`), el Deployment crea un **ReplicaSet nuevo** y escala el viejo a 0. Así se puede hacer rollback rápido (ver Día 51 y Día 52).
+> **¿Por qué existe la capa ReplicaSet?** Para que el rolling update funcione. Cada cambio en el Pod Template (ej: `set image`) hace que el Deployment cree un **ReplicaSet nuevo** y escale el viejo a 0. Así se puede hacer rollback rápido (ver Día 51 y Día 52).
 
 ### Anatomía de un container — campos importantes
 
@@ -67,7 +67,7 @@ Solo declaramos los mínimos en este lab (`name` + `image`), pero un container "
 
 | Campo                  | Para qué sirve                                                                                  |
 | ---------------------- | ----------------------------------------------------------------------------------------------- |
-| `name`                 | Identificador del container dentro del Pod (único). Lo usás en `kubectl logs/exec -c`            |
+| `name`                 | Identificador del container dentro del Pod (único). Se usa en `kubectl logs/exec -c`             |
 | `image`                | Imagen de OCI/Docker (`repo:tag` o `repo@sha256:...`). Usar tag fijo, no `latest`, en prod      |
 | `imagePullPolicy`      | `Always` / `IfNotPresent` / `Never`. Default `IfNotPresent` salvo si el tag es `latest`         |
 | `command`              | Sobrescribe el `ENTRYPOINT` de la imagen. Lista de strings (un argv por elemento)               |
@@ -183,7 +183,7 @@ Service ClusterIP (10.43.110.17:80)
 Pod (10.42.1.5:80) — nginx escuchando
 ```
 
-> **Importante**: `nodePort` se abre en **TODOS los nodos** del cluster, incluso los que no corren ningún Pod del Service. kube-proxy en cada nodo hace el routing. Por eso podés pegarle a cualquier `IP-de-nodo:30011` y va a funcionar.
+> **Importante**: `nodePort` se abre en **TODOS los nodos** del cluster, incluso los que no corren ningún Pod del Service. kube-proxy en cada nodo hace el routing. Por eso se puede pegarle a cualquier `IP-de-nodo:30011` y va a funcionar.
 
 ### El selector como pegamento de los 3 niveles
 
@@ -208,9 +208,9 @@ spec:
 
 Los tres `app: nginx-deployment` **DEBEN coincidir**. No hay un check formal — son solo strings — pero si difieren, todo se desconecta silenciosamente:
 
-- Si el `selector` del Deployment no matchea el `template.labels`: el Deployment crea pods pero los considera "huérfanos" y crea más → loop infinito
+- Si el `selector` del Deployment no matchea los `template.labels`: el Deployment crea pods pero los considera "huérfanos" y crea más → loop infinito
 - Si el `selector` del Service no matchea: el Service queda con 0 endpoints → 503/timeout al acceder
-- Si el `template.labels` cambia pero el `selector` no: el Deployment no reconoce sus propios pods como suyos
+- Si los `template.labels` cambian pero el `selector` no: el Deployment no reconoce sus propios pods como suyos
 
 **Comprobar la conexión Service → Pods**:
 
@@ -497,7 +497,7 @@ Lo ves con: `kubectl get cm kube-proxy -n kube-system -o yaml | grep mode:`. La 
 ## Cuándo NO usar NodePort
 
 - **En producción cloud**: usar `LoadBalancer`. El cloud provider crea un LB externo (con DNS, TLS termination, etc.) y los nodos no quedan expuestos directamente.
-- **Si necesitás HTTPS / paths múltiples / virtual hosts**: usar un **Ingress** controller. Un solo LoadBalancer por delante del Ingress, y el Ingress hace ruteo L7 (por path, por host).
+- **Para HTTPS / paths múltiples / virtual hosts**: usar un **Ingress** controller. Un solo LoadBalancer por delante del Ingress, y el Ingress hace ruteo L7 (por path, por host).
 - **Si el cluster está en una red corporativa con firewalls estrictos**: NodePort abre puertos en cada nodo (rango 30000-32767), lo cual choca con políticas de firewall corporativas comunes.
 
 ## Troubleshooting

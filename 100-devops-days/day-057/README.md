@@ -85,7 +85,7 @@ spec:
       restartPolicy: Never   # ❌ ignorado en containers regulares
 ```
 
-El problema: **K8s NO da error si lo ponés mal indentado** — simplemente lo ignora silenciosamente y aplica el default (`Always`). Entonces tu container completó, K8s lo reinició, completó otra vez, K8s lo reinició, y eventualmente entró en `CrashLoopBackOff` aunque el exit code haya sido `0` siempre.
+El problema: **K8s NO da error si se pone mal indentado** — simplemente lo ignora silenciosamente y aplica el default (`Always`). Entonces el container completó, K8s lo reinició, completó otra vez, K8s lo reinició, y eventualmente entró en `CrashLoopBackOff` aunque el exit code haya sido `0` siempre.
 
 #### Los 3 valores válidos de `restartPolicy`
 
@@ -263,7 +263,7 @@ envFrom:
   - configMapRef: { name: greeting-config }
 ```
 
-K8s toma TODAS las keys del ConfigMap y las inyecta como env vars con el mismo nombre. Más limpio si tenés 5+ vars. Ojo: si dos ConfigMaps tienen la misma key, K8s da un evento `InvalidVariableNames` y skipea las que colisionan.
+K8s toma TODAS las keys del ConfigMap y las inyecta como env vars con el mismo nombre. Más limpio con 5+ vars. Ojo: si dos ConfigMaps tienen la misma key, K8s da un evento `InvalidVariableNames` y skipea las que colisionan.
 
 #### Forma 4 — Downward API (metadata del pod)
 

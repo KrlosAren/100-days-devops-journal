@@ -70,13 +70,13 @@ The Deployment "..." is invalid: spec.template.metadata.labels: Invalid value: .
 selector does not match template labels
 ```
 
-Más aún, `spec.selector` es **inmutable** después de creado. Si querés cambiar el selector, hay que borrar el Deployment entero y recrearlo.
+Más aún, `spec.selector` es **inmutable** después de creado. Para cambiar el selector, hay que borrar el Deployment entero y recrearlo.
 
 ### Por qué (③) y (④) coinciden — por **convención**, no obligación
 
-El Service usa `selector = ④` para construir su lista de endpoints. Si querés que el Service envíe tráfico a estos pods, sus labels (③) deben matchear los del selector (④).
+El Service usa `selector = ④` para construir su lista de endpoints. Para que el Service envíe tráfico a estos pods, sus labels (③) deben matchear los del selector (④).
 
-Pero **no es obligatorio que sean iguales**: podrías diseñar pods con MÁS labels que los que el Service matchea, y el Service igualmente los incluiría. Por ejemplo:
+Pero **no es obligatorio que sean iguales**: se pueden diseñar pods con MÁS labels que los que el Service matchea, y el Service igualmente los incluiría. Por ejemplo:
 
 ```yaml
 # Pods tienen 3 labels
@@ -104,7 +104,7 @@ kubectl get deployments -l app=grafana-deployment-datacenter
 kubectl get deployments -l env=prod,tier=monitoring
 ```
 
-Si lo omitís, el Deployment funciona igual — solo no aparecerá en queries por label. Por convención se le ponen los mismos labels que al template para consistencia, pero técnicamente podría tener labels completamente distintos:
+Al omitirlo, el Deployment funciona igual — solo no aparecerá en queries por label. Por convención se le ponen los mismos labels que al template para consistencia, pero técnicamente podría tener labels completamente distintos:
 
 ```yaml
 metadata:
@@ -148,9 +148,9 @@ selector:
 | `Exists`        | El label existe (cualquier valor)                    |
 | `DoesNotExist`  | El label NO existe                                   |
 
-Las dos formas son combinables — si usás las dos en el mismo selector, K8s las evalúa con AND.
+Las dos formas son combinables — al usar las dos en el mismo selector, K8s las evalúa con AND.
 
-> **Una limitación clave:** `spec.selector` de un **Service** solo acepta `matchLabels`-style (igualdad), NO `matchExpressions`. Por eso en la práctica casi siempre usamos `matchLabels` (es lo más compatible). Si necesitás un Service con selectores complejos, hay que crear un Service "headless" + EndpointSlices manuales.
+> **Una limitación clave:** `spec.selector` de un **Service** solo acepta `matchLabels`-style (igualdad), NO `matchExpressions`. Por eso en la práctica casi siempre usamos `matchLabels` (es lo más compatible). Para un Service con selectores complejos, hay que crear un Service "headless" + EndpointSlices manuales.
 
 ### ¿Y si NO uso labels? — Las alternativas
 
@@ -158,7 +158,7 @@ Para conectar **pods a pods** o **pods al Service**, la respuesta corta es "no h
 
 #### Caso 1: Deployment → Pods
 
-**No hay alternativa**. El RS controller está hardcodeado para usar labels. No podés cambiarlo. Si querés un agrupamiento sin labels, no es un Deployment — es un Pod stand-alone.
+**No hay alternativa**. El RS controller está hardcodeado para usar labels. No se puede cambiar. Para un agrupamiento sin labels, no es un Deployment — es un Pod stand-alone.
 
 #### Caso 2: Service → Pods
 
@@ -178,7 +178,7 @@ spec:
       targetPort: 5432
 # (sin selector:)
 ---
-# Endpoints manual — vos definís IPs y puertos a mano
+# Endpoints manual — las IPs y puertos se definen a mano
 apiVersion: v1
 kind: Endpoints
 metadata:
@@ -191,7 +191,7 @@ subsets:
       - { port: 5432 }
 ```
 
-Esto es útil cuando los "endpoints" **no son pods de K8s**: una DB Postgres corriendo en una VPC distinta, un mainframe legacy, un servicio en otro datacenter. K8s no puede labelear esas máquinas — entonces declarás los endpoints a mano.
+Esto es útil cuando los "endpoints" **no son pods de K8s**: una DB Postgres corriendo en una VPC distinta, un mainframe legacy, un servicio en otro datacenter. K8s no puede labelear esas máquinas — entonces los endpoints se declaran a mano.
 
 ##### b) Service tipo `ExternalName`
 
@@ -368,7 +368,7 @@ Si la lista está vacía, el selector del Service tampoco tendría endpoints. Es
 
 ## Cambiando los labels — ¿qué se rompe?
 
-Para internalizar el rol de cada label, vale considerar qué pasa si los cambiás:
+Para internalizar el rol de cada label, vale considerar qué pasa al cambiarlos:
 
 | Cambio                                                                | Consecuencia                                                                                  |
 | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |

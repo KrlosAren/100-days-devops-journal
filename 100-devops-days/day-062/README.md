@@ -269,7 +269,7 @@ data:
 | ----------------- | -------------------------------------------- | --------------------------------------------- |
 | `--from-file`     | En el archivo y en el cluster                | Cuando el secret ya es un archivo (cert, key, license file) |
 | `--from-literal`  | En el history del shell + en el cluster      | Scripts efímeros, demos, NO producción manual |
-| Manifest YAML     | En el archivo YAML (y en git si lo commiteás — **peligro**) | GitOps con Sealed Secrets / SOPS sobre el YAML |
+| Manifest YAML     | En el archivo YAML (y en git al commitearlo — **peligro**)  | GitOps con Sealed Secrets / SOPS sobre el YAML |
 
 La regla práctica: **nunca commitear un manifest de Secret con `data` plano a un repo**. Si va a git, debe pasar antes por una capa de cifrado (Sealed Secrets cifra con la pubkey del cluster, SOPS lo encripta simétricamente, o se inyecta desde un secret manager externo en CI/CD).
 

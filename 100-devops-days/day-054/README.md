@@ -125,7 +125,7 @@ Estructura a tener clara:
 
 - **`spec.volumes`**: declara el volumen **a nivel de Pod**, una sola vez. El nombre `volume-share` es el identificador que usarán los containers.
 - **`spec.containers[].volumeMounts[]`**: cada container declara qué volúmenes monta y dónde. El campo `name` referencia al volume declarado arriba; el `mountPath` es **local al container**.
-- **`{}` después de `emptyDir`** es importante: indica "objeto vacío, usá defaults" (filesystem del nodo, sin límite de tamaño). Sin `{}` el campo queda en `null` y K8s rechaza el manifest.
+- **`{}` después de `emptyDir`** es importante: indica "objeto vacío, usar defaults" (filesystem del nodo, sin límite de tamaño). Sin `{}` el campo queda en `null` y K8s rechaza el manifest.
 
 ### 2. Aplicar y verificar
 
@@ -238,7 +238,7 @@ root@volume-share-xfusion:/# exit
 ### Verificar el path real del `emptyDir` en el nodo
 
 ```bash
-# Solo si tenés acceso al nodo (en un cluster real esto es raro)
+# Solo con acceso al nodo (en un cluster real esto es raro)
 kubectl get pod volume-share-xfusion -o jsonpath='{.metadata.uid}'
 # → 7a3e8f2c-...
 
@@ -246,7 +246,7 @@ kubectl get pod volume-share-xfusion -o jsonpath='{.metadata.uid}'
 # /var/lib/kubelet/pods/<pod-uid>/volumes/kubernetes.io~empty-dir/volume-share
 ```
 
-> En labs como KodeKloud (donde el jump-host ES el nodo) sí se puede mirar este path. En clusters gestionados (EKS, GKE, AKS) generalmente no tenés SSH al nodo, así que esto queda en concepto.
+> En labs como KodeKloud (donde el jump-host ES el nodo) sí se puede mirar este path. En clusters gestionados (EKS, GKE, AKS) generalmente no hay SSH al nodo, así que esto queda en concepto.
 
 ## Troubleshooting
 

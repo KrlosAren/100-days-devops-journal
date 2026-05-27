@@ -85,7 +85,7 @@ Detalles a notar:
 | `LoadBalancer`      | ClusterIP + NodePort + IP pública del cloud provider     | Internet                                                     | Producción en cloud (provisiona ELB / NLB / GCLB)                 |
 | `ExternalName`      | Sin IP — devuelve un CNAME                               | Cualquiera que resuelva DNS interno                          | Apuntar a un servicio externo (RDS, hostname legacy)              |
 
-> El `nodePort: 32678` del lab cae dentro del rango permitido por default (30000–32767). Si no lo declarás explícitamente, K8s asigna uno aleatorio del rango.
+> El `nodePort: 32678` del lab cae dentro del rango permitido por default (30000–32767). Sin declararlo explícitamente, K8s asigna uno aleatorio del rango.
 
 ### Glosario del manifest (lo nuevo / lo que vale anclar)
 

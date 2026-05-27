@@ -193,12 +193,12 @@ Events:
   Normal  Started    73s   kubelet            Started container httpd
 ```
 
-Dos campos que **solo aparecen en pods gestionados por un Deployment** (compará con el `describe` de un Pod suelto en day-048):
+Dos campos que **solo aparecen en pods gestionados por un Deployment** (comparar con el `describe` de un Pod suelto en day-048):
 
-- **`Labels: pod-template-hash=6c755866c7`** — Kubernetes inyecta automáticamente este label al pod (vos solo declaraste `app: httpd` en el manifest). Es el mismo hash que aparece en el nombre del ReplicaSet, y es lo que el Deployment usa internamente para distinguir pods de la versión actual vs versiones anteriores durante un rollout.
-- **`Controlled By: ReplicaSet/httpd-6c755866c7`** — esta línea es la **ownerReference** materializada. Es metadata del pod que apunta a su "padre". Cuando borres el Deployment con `kubectl delete deployment httpd`, Kubernetes sigue esta cadena (Deployment → RS → Pod) en cascada y limpia todo. Es también lo que permite el self-healing: el ReplicaSet sabe qué pods le pertenecen leyendo la ownerReference, y si falta uno, crea otro.
+- **`Labels: pod-template-hash=6c755866c7`** — Kubernetes inyecta automáticamente este label al pod (en el manifest solo aparece `app: httpd`). Es el mismo hash que aparece en el nombre del ReplicaSet, y es lo que el Deployment usa internamente para distinguir pods de la versión actual vs versiones anteriores durante un rollout.
+- **`Controlled By: ReplicaSet/httpd-6c755866c7`** — esta línea es la **ownerReference** materializada. Es metadata del pod que apunta a su "padre". Al borrar el Deployment con `kubectl delete deployment httpd`, Kubernetes sigue esta cadena (Deployment → RS → Pod) en cascada y limpia todo. Es también lo que permite el self-healing: el ReplicaSet sabe qué pods le pertenecen leyendo la ownerReference, y si falta uno, crea otro.
 
-> Si querés ver la `ownerReference` cruda (no solo el resumen "Controlled By"), `kubectl get pod httpd-6c755866c7-jwvlx -o yaml` la muestra en `metadata.ownerReferences[]` con el `uid` exacto del ReplicaSet padre.
+> Para ver la `ownerReference` cruda (no solo el resumen "Controlled By"), `kubectl get pod httpd-6c755866c7-jwvlx -o yaml` la muestra en `metadata.ownerReferences[]` con el `uid` exacto del ReplicaSet padre.
 
 ### Estado del rollout
 
@@ -210,7 +210,7 @@ kubectl rollout status deployment/httpd
 deployment "httpd" successfully rolled out
 ```
 
-Útil sobre todo en pipelines de CI/CD: este comando bloquea hasta que el rollout termina (o falla), así que lo podés usar como gate de despliegue.
+Útil sobre todo en pipelines de CI/CD: este comando bloquea hasta que el rollout termina (o falla), así que se puede usar como gate de despliegue.
 
 ### Demostrar self-healing (la propiedad clave)
 
@@ -253,7 +253,7 @@ Lo que pasó en 2 segundos:
 
 Si hubiéramos hecho lo mismo con un Pod suelto (day-048), el pod habría desaparecido y nadie lo recrearía. Esa es la diferencia operativa entre Pod y Deployment llevada a la práctica.
 
-> **No usar `kubectl delete` en producción para esto.** El comando es válido para demos de aprendizaje, pero en producción nunca borrarías un pod a mano. Si querés probar resiliencia real, mirá [chaos engineering tools como `chaos-mesh` o `litmus`](https://chaos-mesh.org/) que inyectan fallas controladas.
+> **No usar `kubectl delete` en producción para esto.** El comando es válido para demos de aprendizaje, pero en producción nadie borra un pod a mano. Para probar resiliencia real, ver [chaos engineering tools como `chaos-mesh` o `litmus`](https://chaos-mesh.org/) que inyectan fallas controladas.
 
 ## Comparación: Pod vs Deployment
 
@@ -275,7 +275,7 @@ Si hubiéramos hecho lo mismo con un Pod suelto (day-048), el pod habría desapa
 | Deployment creado pero `READY 0/1`                                                    | `kubectl describe deployment httpd` para ver eventos. Suele ser `ImagePullBackOff` en el pod                                                              |
 | Cambié `spec.replicas` y no veo nuevo ReplicaSet                                      | Esperado — solo cambios en `spec.template` crean un ReplicaSet nuevo. Las réplicas se ajustan en el RS existente                                          |
 | Deployment se creó pero el pod sigue mostrando una imagen vieja                       | Probable que tengas un pod *suelto* con el mismo label vagando. `kubectl get pods -l app=httpd` y borrarlo si no es del Deployment                        |
-| `kubectl edit` cambió el selector y ahora el Deployment "perdió" sus pods             | El selector es inmutable. Hay que `kubectl delete deployment httpd` (con `--cascade=orphan` si querés conservar pods) y recrearlo                         |
+| `kubectl edit` cambió el selector y ahora el Deployment "perdió" sus pods             | El selector es inmutable. Hay que `kubectl delete deployment httpd` (con `--cascade=orphan` para conservar pods) y recrearlo                         |
 
 ## Recursos
 

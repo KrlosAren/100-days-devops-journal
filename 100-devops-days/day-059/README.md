@@ -205,7 +205,7 @@ Esto confirma que el Pod Template cambió — los hashes son determinísticos so
 | `describe pod <name>`                | Events del kubelet (la verdad sobre por qué no arranca)                    | **El reflejo correcto** cuando un Pod no inicia                  |
 | `logs <pod>` / `logs deployment/X`   | stdout/stderr del container                                                | Solo si el container llegó a arrancar (no en ContainerCreating)  |
 | `logs <pod> --previous`              | stdout/stderr de la instancia anterior del container                       | Diagnosticar CrashLoopBackOff                                    |
-| `get events --sort-by=.lastTimestamp` | Todos los eventos del namespace en orden cronológico                      | Cuando no sabés ni siquiera qué Pod mirar                        |
+| `get events --sort-by=.lastTimestamp` | Todos los eventos del namespace en orden cronológico                      | Cuando no se sabe ni siquiera qué Pod mirar                      |
 
 ## Conexión con días anteriores
 
@@ -243,7 +243,7 @@ Cuando un Pod no levanta, conviene hilar fino y descartar capas de abajo hacia a
 | Imagen con typo aceptada por el API server                     | K8s no valida que el tag/repo exista al crear el Deployment — solo el kubelet, en runtime               | Verificar con `docker pull <image>` antes, o leer el Pod Template post-creación                   |
 | ConfigMap referenciado con nombre incorrecto                   | Igual que arriba: el API server no valida la existencia de objetos referenciados por nombre             | `kubectl get configmap` para comparar nombres reales contra el manifest                           |
 | Fix aplicado pero el Pod sigue roto                            | Posiblemente había **dos** bugs y solo se vio el primero. Volver a `describe pod` después del primer fix | Re-correr `describe pod` después de cada edit hasta que `Events` esté limpio                      |
-| `kubectl edit` abre un editor que no podés usar                | El editor default puede ser vim. Si no lo dominás, exportar otro                                        | `export KUBE_EDITOR="nano"` (o `"code --wait"` para VSCode) antes de correr `kubectl edit`        |
+| `kubectl edit` abre un editor inutilizable                     | El editor default puede ser vim. Sin dominio de vim, exportar otro                                      | `export KUBE_EDITOR="nano"` (o `"code --wait"` para VSCode) antes de correr `kubectl edit`        |
 | Editaste el deployment pero no se actualizó                    | Probablemente guardaste sin cambios reales, o el editor agregó/quitó solo whitespace                    | K8s diff-compara el template; si el hash no cambió, no hubo cambio real. Volver a editar         |
 | Pod arranca pero la app no responde                            | El container está `Running` pero la app interna tarda en estar lista                                    | Esperar unos segundos, ver `kubectl logs` para confirmar mensaje de "ready" / "listening"         |
 

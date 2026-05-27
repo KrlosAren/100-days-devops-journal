@@ -190,7 +190,7 @@ kubectl rollout undo deployment/my-app --to-revision=3
 
 ### ConfigMaps y Secrets: el cambio NO se propaga solo
 
-Si cambiás un ConfigMap (`kubectl edit cm nginx-config`), los pods que lo tienen montado **no se enteran automáticamente**:
+Al cambiar un ConfigMap (`kubectl edit cm nginx-config`), los pods que lo tienen montado **no se enteran automáticamente**:
 
 - Si está montado como **volumen**: el archivo eventualmente se actualiza (puede tardar minutos), pero la app no sabe que cambió → muchas apps necesitan reload
 - Si está montado como **env var**: el cambio NO se propaga nunca al pod existente

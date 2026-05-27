@@ -206,7 +206,7 @@ Events:
 Cosas dignas de subrayar de este output:
 
 - **`Image:` vs `Image ID:`** — `Image` es lo que pediste (`nginx:latest`, un tag mutable). `Image ID` es el **digest SHA256 inmutable** que el kubelet realmente bajó. Si el tag `latest` cambia mañana, este pod sigue corriendo *este* digest; solo al recrear el pod resolvería el `latest` nuevo.
-- **`QoS Class: BestEffort`** — porque el pod no tiene `requests` ni `limits` definidos. Es el QoS más bajo: si el nodo se queda sin memoria, este es el primero en ser evictado. En producción real querés al menos `Burstable` (con requests) o `Guaranteed` (requests = limits).
+- **`QoS Class: BestEffort`** — porque el pod no tiene `requests` ni `limits` definidos. Es el QoS más bajo: si el nodo se queda sin memoria, este es el primero en ser evictado. En producción real conviene al menos `Burstable` (con requests) o `Guaranteed` (requests = limits).
 - **`Events`** es la sección más útil para debugging — la línea de tiempo de qué le pasó al pod desde su creación. Si algo va mal (`ImagePullBackOff`, `CrashLoopBackOff`), aparece acá con el motivo.
 
 ```bash

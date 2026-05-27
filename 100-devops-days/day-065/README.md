@@ -98,7 +98,7 @@ El lab dice "container should **request** for 1 CPU". Eso se traduce al campo `r
 | `requests == limits` (ambos iguales)                     | `Guaranteed`          | Protegido contra eviction; menos throttling |
 | Ni `requests` ni `limits`                                | `BestEffort`          | Primer candidato a eviction        |
 
-Para el lab, declarar **solo `requests: cpu: 1`** es la lectura más literal del requirement. Pero si declarás solo `limits: cpu: 1`, el comportamiento efectivo del Pod es **idéntico** porque K8s rellena el request — el validador del lab no distingue.
+Para el lab, declarar **solo `requests: cpu: 1`** es la lectura más literal del requirement. Pero al declarar solo `limits: cpu: 1`, el comportamiento efectivo del Pod es **idéntico** porque K8s rellena el request — el validador del lab no distingue.
 
 ### CPU "1" — qué significa exactamente
 

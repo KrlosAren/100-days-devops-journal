@@ -24,7 +24,7 @@ Cada contenedor en Kubernetes puede declarar dos valores por recurso (CPU y memo
 - `requests` es **planeación**: define el "espacio reservado" del pod en el nodo
 - `limits` es **policing**: define qué pasa si el contenedor se pasa de la raya
 
-Si no declarás `requests`, el scheduler asume `0` y puede meterte el pod en un nodo saturado. Si no declarás `limits`, el contenedor puede crecer sin freno y desestabilizar al vecino.
+Sin declarar `requests`, el scheduler asume `0` y puede meter el pod en un nodo saturado. Sin declarar `limits`, el contenedor puede crecer sin freno y desestabilizar al vecino.
 
 ### Qué pasa cuando se excede el límite (no es lo mismo CPU que memoria)
 
@@ -33,7 +33,7 @@ Si no declarás `requests`, el scheduler asume `0` y puede meterte el pod en un 
 | **CPU**     | Throttling. El proceso sigue vivo, solo se le da menos tiempo de CPU. **Latencia ↑, no muere**           |
 | **Memoria** | OOMKilled. El kernel mata el proceso (señal `SIGKILL`). El contenedor reinicia (si la policy lo permite) |
 
-Esta asimetría tiene una razón física: la CPU es **compresible** (podés dar menos ciclos), pero la memoria es **incompresible** (no podés "dar menos RAM" — o cabe o no cabe). Cuando un proceso pide más RAM y no hay, el único recurso es matarlo.
+Esta asimetría tiene una razón física: la CPU es **compresible** (se pueden dar menos ciclos), pero la memoria es **incompresible** (no se puede "dar menos RAM" — o cabe o no cabe). Cuando un proceso pide más RAM y no hay, el único recurso es matarlo.
 
 ### Unidades de CPU: cores y millicores
 
@@ -44,7 +44,7 @@ Kubernetes mide CPU en **cores** o **millicores** (un milésimo de core):
 - `100m` = 0.1 core (10% del tiempo de un core)
 - `10m` = 0.01 core — útil para sidecars o procesos casi idle
 
-El `m` significa "milli". Como cualquier CPU moderna tiene varios cores, podés perfectamente pedir `2`, `4`, etc. (un solo proceso multi-thread puede consumir varios cores).
+El `m` significa "milli". Como cualquier CPU moderna tiene varios cores, se puede perfectamente pedir `2`, `4`, etc. (un solo proceso multi-thread puede consumir varios cores).
 
 ### Unidades de memoria: la trampa de `Mi` vs `M`
 

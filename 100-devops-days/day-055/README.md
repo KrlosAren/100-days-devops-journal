@@ -322,7 +322,7 @@ Cada 30s el sidecar re-imprime el contenido entero de los dos archivos. En produ
 
 ### Versión "compat" (sin native sidecar)
 
-Si tu cluster es < K8s 1.28, no podés usar `initContainers` + `restartPolicy: Always`. La forma vieja era declarar el sidecar como un container regular más:
+Si el cluster es < K8s 1.28, no se puede usar `initContainers` + `restartPolicy: Always`. La forma vieja era declarar el sidecar como un container regular más:
 
 ```yaml
 spec:

@@ -19,7 +19,7 @@ Esta guía está organizada en secciones temáticas. Cada una cubre una pregunta
 
 ## Convenciones de esta guía
 
-- Cada sección incluye una **tabla de decisión** al inicio: "quiero X → usá Y".
+- Cada sección incluye una **tabla de decisión** al inicio: "quiero X → usar Y".
 - Los comandos van con su output esperado cuando es relevante.
 - Las trampas comunes están en una sección de **Troubleshooting** al final de cada página.
 - Cross-refs a los días del journal donde apareció el concepto en la práctica.
