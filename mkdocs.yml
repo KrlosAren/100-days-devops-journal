@@ -136,4 +136,9 @@ nav:
   - Herramientas:
       - "sed · Stream Editor": tools/sed/README.md
       - "git · Editar commits": tools/git/README.md
-      - "kubectl · Seleccionar y editar componentes": tools/kubectl/README.md
+      - kubectl:
+          - "Índice": tools/kubectl/README.md
+          - "Seleccionar componentes": tools/kubectl/seleccionar.md
+          - "Editar componentes": tools/kubectl/editar.md
+          - "Volúmenes (PV / PVC / hostPath)": tools/kubectl/volumenes.md
+          - "Config y Secretos (Opaque / stringData / ConfigMap)": tools/kubectl/config-y-secretos.md

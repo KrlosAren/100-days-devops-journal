@@ -81,7 +81,7 @@ Cuando un Secret se monta como volumen, K8s **crea un archivo por cada clave** d
 - El `mountPath` es `/opt/cluster`
 - Resultado: aparece el archivo `/opt/cluster/media.txt` dentro del container con el contenido decodificado del Secret
 
-Si el Secret tuviera más claves, cada una se materializa como archivo en ese directorio. Si querés **renombrar** o **filtrar** claves al montarlas, se usa `volumes[].secret.items`.
+Si el Secret tuviera más claves, cada una se materializa como archivo en ese directorio. Para **renombrar** o **filtrar** claves al montarlas, se usa `volumes[].secret.items`.
 
 ## Pasos
 
@@ -256,12 +256,12 @@ metadata:
 type: Opaque
 data:
   media.txt: NWVjdXIzCg==     # base64 del valor
-# o usar stringData (K8s lo encodea por vos):
+# o usar stringData (K8s lo codifica al apply):
 # stringData:
 #   media.txt: "5ecur3"
 ```
 
-> `stringData` es **write-only**: cuando hacés `get -o yaml`, K8s te lo muestra ya en `data` codificado. Útil para no tener que correr `base64` a mano al escribir el manifest.
+> `stringData` es **write-only**: al hacer `get -o yaml`, K8s muestra el resultado ya en `data` codificado. Útil para no tener que correr `base64` a mano al escribir el manifest.
 
 #### Comparación
 
@@ -290,14 +290,14 @@ Los tres usan el mismo bloque `volumes` + `volumeMounts` (cuando se montan), lo 
 - **Día 57 (env vars + ConfigMap)**: la alternativa "Secret como env var" usaría `valueFrom.secretKeyRef` en lugar de `configMapKeyRef`. Mismo patrón, distinta fuente.
 - **Día 59 (typo en ConfigMap)**: el mismo riesgo existe con Secrets — si el `secretName` no matchea exactamente, el Pod queda `ContainerCreating` esperando un objeto que nunca aparece. La diferencia es que con `optional: true` el Pod arrancaría igual, lo cual es casi siempre peor para secrets críticos.
 - **Día 60 (PV + PVC)**: misma sintaxis de `volumes` + `volumeMounts`, distinto backend. Un PVC apunta a almacenamiento persistente; un Secret apunta a tmpfs efímero. Ambos son volúmenes desde la perspectiva del container.
-- **Día 53 (mountPath mal alineado)**: la regla "verificar que `mountPath` coincide con donde la app lee" se mantiene. Si el lab pidiera `/etc/license` y montás en `/opt/cluster`, la app no lo encuentra.
+- **Día 53 (mountPath mal alineado)**: la regla "verificar que `mountPath` coincide con donde la app lee" se mantiene. Si el lab pidiera `/etc/license` y el mount se hace en `/opt/cluster`, la app no lo encuentra.
 - **Día 48 (primer Pod)**: cuatro días después aparece el mismo patrón básico — Pod con un container y un volumen — pero con la fuente del volumen siendo un Secret en lugar de nada.
 
 ## Reflexión: secrets en K8s vs otros enfoques
 
 Antes de K8s, el manejo de secretos se resolvía con **AWS Secrets Manager** para entornos en la nube y con **archivos `.env`** para mover valores sensibles entre stages locales y de CI. Esos dos mecanismos tienen lógicas distintas — Secrets Manager es un servicio centralizado con auditoría, rotación y RBAC del lado del provider; los `.env` son simples y portables, pero terminan filtrándose con facilidad si alguien comitea sin querer o si quedan en logs de un build.
 
-Mirando ahora el built-in `Secret` de K8s con esa experiencia previa, queda la sensación de que **funciona bien para configuraciones de aplicación que no son críticamente sensibles** — variables que no querés tener planas en el manifest pero cuya filtración no rompe nada serio. Para credenciales reales (passwords de DB de prod, tokens de API con permisos amplios, llaves privadas), apoyarse solo en el built-in se queda corto: el dato vive en etcd sin encriptación por default, y cualquiera con acceso al recurso puede dumpearlo en base64 trivialmente.
+Mirando ahora el built-in `Secret` de K8s con esa experiencia previa, queda la sensación de que **funciona bien para configuraciones de aplicación que no son críticamente sensibles** — variables que no conviene tener planas en el manifest pero cuya filtración no rompe nada serio. Para credenciales reales (passwords de DB de prod, tokens de API con permisos amplios, llaves privadas), apoyarse solo en el built-in se queda corto: el dato vive en etcd sin encriptación por default, y cualquiera con acceso al recurso puede dumpearlo en base64 trivialmente.
 
 **SOPS** es la pieza que más cierra desde este lado: permite encriptar el manifest del Secret antes de meterlo a git, lo que hace viable compartir secretos en repos compartidos sin exponerlos. El secret existe versionado, auditable, y solo quien tiene la llave (KMS, age, PGP) puede leerlo — lo que cubre el gap más importante del built-in (el almacenamiento plano) sin sumar componentes nuevos al cluster. Para escenarios donde el secret debe consultarse en runtime desde un secret manager externo, **External Secrets Operator** sería el siguiente paso natural, pero SOPS resuelve el 80% de los casos con mucho menos overhead.
 
@@ -308,7 +308,7 @@ Mirando ahora el built-in `Secret` de K8s con esa experiencia previa, queda la s
 | El validador del lab marca el Pod como incorrecto a pesar de estar `Running` | El nombre del Pod no coincide exactamente con la spec del lab (`secret-devops` vs `secrets-devops`)    | Releer el requirement: los validadores comparan strings exactos. Recrear el Pod con el nombre correcto. |
 | Pod en `CreateContainerError` o `ContainerCreating` indefinidamente | El Secret referenciado por `secretName` no existe en el namespace                                      | `kubectl get secret -n <ns>` para verificar. Crearlo o corregir el nombre.                              |
 | `kubectl exec` muestra el directorio del mount vacío              | El Secret existe pero no tiene claves (`data: {}`), o las claves se filtraron con `items` mal definido | `kubectl get secret <name> -o yaml` y verificar `data:`                                                 |
-| El archivo aparece pero con contenido base64 sin decodificar      | (Bug propio si lo armás manual) — probablemente codificaste **doble** el valor en el YAML              | Usar `stringData:` en el manifest, o asegurarse de codificar **una sola vez** con `base64 -w0`         |
+| El archivo aparece pero con contenido base64 sin decodificar      | (Bug propio al armarlo manual) — probablemente se codificó **doble** el valor en el YAML              | Usar `stringData:` en el manifest, o asegurarse de codificar **una sola vez** con `base64 -w0`         |
 | `cat` muestra el valor con un salto de línea extra                | Es esperable — el archivo original tenía `\n` al final, y K8s lo preserva                              | Si la app es estricta con whitespace, usar `--from-literal` o `printf` sin trailing newline             |
 | Permission denied al leer el archivo dentro del container         | `defaultMode` del volumen es muy restrictivo, o el container corre con un UID que no matchea           | Ajustar `volumes[].secret.defaultMode` (ej. `0444`) o usar `fsGroup` en `securityContext`               |
 | `describe pod` no muestra el valor del Secret                     | **No es un bug — es feature**: K8s nunca dumpea valores de Secrets en describe                          | Para verificar el valor: `kubectl get secret -o jsonpath='{.data.<key>}' \| base64 -d`                  |

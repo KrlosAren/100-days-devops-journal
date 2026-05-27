@@ -112,7 +112,7 @@ resources:
     cpu: 50m
 ```
 
-Sin `requests`. K8s aplica una regla de relleno: **si solo definís `limits`, los `requests` se asumen iguales a los `limits`**. Esto afecta:
+Sin `requests`. K8s aplica una regla de relleno: **si solo se define `limits`, los `requests` se asumen iguales a los `limits`**. Esto afecta:
 
 - **QoS class** del Pod: pasa a ser `Burstable` (no `BestEffort`). Un `BestEffort` es el primero en ser evicted bajo presión de memoria; un `Burstable` está protegido hasta su `request`.
 - **Scheduling**: el scheduler reserva `50m CPU` y `100Mi memory` en el nodo elegido, no solo "lo que use".
@@ -366,7 +366,7 @@ Si la columna `ENDPOINTS` quedara vacía, significa que **ningún Pod matchea el
 - **Día 48 (primer Pod)**: el mismo bloque `spec.containers` con `image`, ahora multiplicado por dos containers en dos Deployments.
 - **Día 49 (Deployments)**: la misma cáscara `Deployment → ReplicaSet → Pod`, ahora con `selector.matchLabels` apuntando a `run` y `db` (en vez del clásico `app`).
 - **Día 50 (Resource Limits)**: aparece otra vez el bloque `resources.limits`, ahora con la observación de que omitir `requests` no es free — hereda los valores del `limits` y cambia el QoS class.
-- **Día 54 (`emptyDir`)**: tres `emptyDir` distintos en un solo stack. Sigue valiendo la regla: **no usar `emptyDir` para datos que querés conservar**.
+- **Día 54 (`emptyDir`)**: tres `emptyDir` distintos en un solo stack. Sigue valiendo la regla: **no usar `emptyDir` para datos a conservar**.
 - **Día 56 (Deployment + NodePort)**: idéntico patrón, ahora aplicado a un stack con dos Deployments en lugar de uno.
 - **Día 57 (env vars)**: las variables de DB están planas en el manifest. El Día 57 introdujo el patrón cómo evitarlo (ConfigMap / Secret + `valueFrom`); acá se vuelve al estilo plano por requirement del lab.
 - **Día 58 (autopsia de labels)**: el riesgo de desalinear `selector` con `template.labels` sigue presente — ahora multiplicado por dos Deployments y dos Services.
@@ -394,7 +394,7 @@ Comparado con desplegar en **ECS en AWS**, los matices se notan: ECS abstrae el 
 | La página de instalación no carga al pegarle al `nodeIP:32678`          | El Pod arrancó pero el container devuelve 502/404                                                            | `kubectl logs <gallery-pod> -n iron-namespace-nautilus` y verificar que nginx esté sirviendo                    |
 | `OOMKilled` en el Pod de gallery                                        | El `limits.memory: 100Mi` es muy ajustado para nginx + assets. Si la app crece, el kernel mata el container | Subir el `limits.memory` (300–500Mi típicamente cómodo para nginx). El lab fuerza 100Mi por requirement         |
 | `Deployment selector does not match template labels`                    | Mismatch entre `spec.selector.matchLabels` y `spec.template.metadata.labels`                                | Mirar ambos bloques y verificar que cada key/value coincide exactamente                                         |
-| Pods siguen siendo `Burstable` aunque solo definimos `limits`           | Es el comportamiento esperado — K8s asume `requests == limits` si solo definís `limits`                     | No es un problema, es la regla. Para `Guaranteed` declarar `requests == limits` explícitamente                  |
+| Pods siguen siendo `Burstable` aunque solo definimos `limits`           | Es el comportamiento esperado — K8s asume `requests == limits` si solo se define `limits`                     | No es un problema, es la regla. Para `Guaranteed` declarar `requests == limits` explícitamente                  |
 | El namespace tiene recursos huérfanos después de borrar un Deployment    | Se borró el Deployment pero el ReplicaSet quedó (no debería con `--cascade=foreground`)                    | `kubectl delete rs -n <ns> -l <selector>` o borrar el namespace entero (`delete ns <name>` borra todo dentro)  |
 | Querer borrar todo el stack de una                                       | Recurso por recurso es tedioso si son muchos                                                                | `kubectl delete namespace iron-namespace-nautilus` borra **todos** los recursos dentro en cascada               |
 

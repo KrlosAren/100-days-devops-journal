@@ -70,8 +70,8 @@ Cinco tipos de recursos (PV, PVC, Secret×3, Deployment, Service) con relaciones
 
 | Campo            | Qué espera           | Quién codifica          | Cuándo usar                                                 |
 | ---------------- | -------------------- | ----------------------- | ----------------------------------------------------------- |
-| `data:`          | Valores **ya en base64** | El que escribe el YAML  | Cuando ya tenés los valores codificados (export de otro cluster) |
-| `stringData:`    | Valores **planos**       | K8s al hacer apply      | Cuando escribís el YAML a mano (este lab)                   |
+| `data:`          | Valores **ya en base64** | El que escribe el YAML  | Cuando los valores ya están codificados (export de otro cluster) |
+| `stringData:`    | Valores **planos**       | K8s al hacer apply      | Al escribir el YAML a mano (este lab)                       |
 
 > **El error de este lab**: usar `data:` con valores planos (`password: YUIidhb667`) hace que K8s intente decodificar `YUIidhb667` como base64. Como tiene caracteres válidos pero no respeta la longitud múltiplo de 4 y el padding, falla con:
 > ```
@@ -117,7 +117,7 @@ Cuando un archivo YAML contiene **varios documentos** separados por `---`, `kube
 - El comando sigue procesando los siguientes
 - Al final reporta todos los errores juntos
 
-Esto significa que un apply parcial puede dejar el cluster en un estado **inconsistente**: tenés el Deployment y el PVC creados, pero los Secrets que el Deployment necesita no se crearon. El Pod queda esperando los Secrets que nunca llegan.
+Esto significa que un apply parcial puede dejar el cluster en un estado **inconsistente**: el Deployment y el PVC quedan creados, pero los Secrets que el Deployment necesita no se crearon. El Pod queda esperando los Secrets que nunca llegan.
 
 > **Patrón operacional**: después de un apply con errores, **fixear y re-aplicar** sin borrar nada. Los recursos ya creados se ven como `unchanged` y solo se aplican los nuevos / corregidos.
 
@@ -512,7 +512,7 @@ Algo que me queda como **aprendizaje importante** es el **orden de creación de 
 
 Al crear **7 recursos** en un solo apply, hay que ser **mucho más detallista** con los typos. Es muy fácil equivocarse en un campo (`accessModes` mal indentado, `ReadWriteOne` sin la `c`, una clave de Secret mal escrita) y los bugs resultantes **no siempre son sencillos de identificar** — el mensaje de error puede apuntar a un síntoma superficial que esconde la causa real (como el `quantities must match the regex` que en realidad era un problema de indentación, no de cantidades).
 
-No sabía sobre **`data` y `stringData`** ni cuál era la diferencia. Lo entendí en este lab: `data` espera el valor **ya en base64**, `stringData` lo acepta plano y K8s lo codifica al apply. Para escribir Secrets a mano, `stringData` es siempre la opción correcta; `data` solo sirve cuando ya tenés los valores codificados (típicamente al copiar/exportar desde otro cluster).
+No sabía sobre **`data` y `stringData`** ni cuál era la diferencia. Lo entendí en este lab: `data` espera el valor **ya en base64**, `stringData` lo acepta plano y K8s lo codifica al apply. Para escribir Secrets a mano, `stringData` es siempre la opción correcta; `data` solo sirve cuando los valores ya están codificados (típicamente al copiar/exportar desde otro cluster).
 
 El bug más complicado fue el **`must specify a volume type`**. No conocía ese key del PV ni las diferencias entre los tipos (`hostPath`, `nfs`, `csi`, etc.) ni los casos de uso de cada uno. Saber que `hostPath` solo sirve para single-node clusters y que en producción real se usan CSI drivers fue uno de los aprendizajes más concretos del día.
 
