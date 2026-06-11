@@ -80,6 +80,20 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 64](100-devops-days/day-064/README.md) | Troubleshooting Python Flask en K8s — dos bugs simultáneos (image typo + port mismatch) | Completado |
 | [Día 65](100-devops-days/day-065/README.md) | Deploy de Redis en K8s con ConfigMap montado como volumen | Completado |
 | [Día 66](100-devops-days/day-066/README.md) | Deploy de MySQL en K8s — stack completo (PV + PVC + Secrets + env vars + Deployment + Service NodePort) | Completado |
+| [Día 67](100-devops-days/day-067/README.md) | Deploy Guestbook App — 3 Deployments + 4 Services (PHP frontend + Redis master/slave) + DNS discovery | Completado |
+| [Día 68](100-devops-days/day-068/README.md) | Set Up Jenkins Server — instalación con apt + Java 21 + setup wizard (transición a CI/CD) | Completado |
+| [Día 69](100-devops-days/day-069/README.md) | Install Jenkins Plugins — Git + GitLab vía Update Center + restart con drain | Completado |
+| [Día 70](100-devops-days/day-070/README.md) | Configure Jenkins User Access — Project-based Matrix Authorization (user `anita` con Overall Read global + Job Read por-proyecto) | Completado |
+| [Día 71](100-devops-days/day-071/README.md) | Jenkins Job: Package Installation — Freestyle + String Parameter + SSH remoto + yum install (fix de key mismatch) | Completado |
+| [Día 72](100-devops-days/day-072/README.md) | Jenkins Parameterized Builds — String Parameter + Choice Parameter + echo en shell | Completado |
+| [Día 73](100-devops-days/day-073/README.md) | Jenkins Scheduled Jobs — cron trigger `*/3 * * * *` + scp multi-server (Jenkins → stapp02 → ststor01) | Completado |
+| [Día 74](100-devops-days/day-074/README.md) | Jenkins Database Backup Job — mysqldump + Credentials Manager (Secret text + binding) + cron `*/10` | Completado |
+| [Día 75](100-devops-days/day-075/README.md) | Jenkins Slave Nodes — Controller + 3 Agents (inbound JNLP/WebSocket, Java 17, labels stapp01/02/03) | Completado |
+| [Día 76](100-devops-days/day-076/README.md) | Jenkins Project Security — Project-based Matrix con Inheritance Strategy (sam + rohan sobre job Packages) | Completado |
+| [Día 77](100-devops-days/day-077/README.md) | Jenkins Deploy Pipeline — primer Declarative Pipeline (git pull deploy via agent corriendo como sarah) | Completado |
+| [Día 78](100-devops-days/day-078/README.md) | Jenkins Conditional Pipeline — parameters + `script { if/else }` para deploy por branch (master/feature) | Completado |
+| [Día 79](100-devops-days/day-079/README.md) | Jenkins Deployment Job — Freestyle + Poll SCM + sudo NOPASSWD + cp deploy + auto-trigger por git push | Completado |
+| [Día 80](100-devops-days/day-080/README.md) | Jenkins Chained Builds — upstream `devops-app-deployment` → downstream `manage-services` con "trigger only if stable" | Completado |
 
 ## Progreso - Kubernetes
 

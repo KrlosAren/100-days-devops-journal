@@ -112,6 +112,20 @@ nav:
       - "Día 64 · Troubleshooting Python Flask en K8s (dos bugs simultáneos)": devops/day-064/README.md
       - "Día 65 · Deploy de Redis con ConfigMap": devops/day-065/README.md
       - "Día 66 · Deploy de MySQL (PV + PVC + Secrets + Deployment + Service)": devops/day-066/README.md
+      - "Día 67 · Deploy Guestbook App (PHP + Redis master/slave + DNS discovery)": devops/day-067/README.md
+      - "Día 68 · Set Up Jenkins Server (apt + Java 21 + setup wizard)": devops/day-068/README.md
+      - "Día 69 · Install Jenkins Plugins (Git + GitLab vía Update Center)": devops/day-069/README.md
+      - "Día 70 · Configure Jenkins User Access (Project-based Matrix Authorization)": devops/day-070/README.md
+      - "Día 71 · Jenkins Job: Package Installation (Freestyle + SSH + String Parameter)": devops/day-071/README.md
+      - "Día 72 · Jenkins Parameterized Builds (String + Choice Parameter)": devops/day-072/README.md
+      - "Día 73 · Jenkins Scheduled Jobs (cron trigger + scp multi-server)": devops/day-073/README.md
+      - "Día 74 · Jenkins Database Backup Job (mysqldump + Credentials Manager)": devops/day-074/README.md
+      - "Día 75 · Jenkins Slave Nodes (Controller + 3 Agents inbound JNLP)": devops/day-075/README.md
+      - "Día 76 · Jenkins Project Security (Project-based Matrix + Inheritance)": devops/day-076/README.md
+      - "Día 77 · Jenkins Deploy Pipeline (primer Declarative Pipeline)": devops/day-077/README.md
+      - "Día 78 · Jenkins Conditional Pipeline (parameters + script block)": devops/day-078/README.md
+      - "Día 79 · Jenkins Deployment Job (Poll SCM + sudo NOPASSWD + auto-deploy)": devops/day-079/README.md
+      - "Día 80 · Jenkins Chained Builds (upstream → downstream trigger only if stable)": devops/day-080/README.md
   - Kubernetes:
       - "Día 01 · Crear un Pod": kubernetes/day-001/README.md
       - "Día 02 · Crear un Deployment": kubernetes/day-002/README.md
