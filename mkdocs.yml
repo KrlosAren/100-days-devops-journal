@@ -126,6 +126,8 @@ nav:
       - "Día 78 · Jenkins Conditional Pipeline (parameters + script block)": devops/day-078/README.md
       - "Día 79 · Jenkins Deployment Job (Poll SCM + sudo NOPASSWD + auto-deploy)": devops/day-079/README.md
       - "Día 80 · Jenkins Chained Builds (upstream → downstream trigger only if stable)": devops/day-080/README.md
+      - "Día 81 · Jenkins Multistage Pipeline (Deploy + Test con curl + grep)": devops/day-081/README.md
+      - "Día 82 · Ansible Inventory for App Server Testing (formato INI)": devops/day-082/README.md
   - Kubernetes:
       - "Día 01 · Crear un Pod": kubernetes/day-001/README.md
       - "Día 02 · Crear un Deployment": kubernetes/day-002/README.md

@@ -94,6 +94,8 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 78](100-devops-days/day-078/README.md) | Jenkins Conditional Pipeline — parameters + `script { if/else }` para deploy por branch (master/feature) | Completado |
 | [Día 79](100-devops-days/day-079/README.md) | Jenkins Deployment Job — Freestyle + Poll SCM + sudo NOPASSWD + cp deploy + auto-trigger por git push | Completado |
 | [Día 80](100-devops-days/day-080/README.md) | Jenkins Chained Builds — upstream `devops-app-deployment` → downstream `manage-services` con "trigger only if stable" | Completado |
+| [Día 81](100-devops-days/day-081/README.md) | Jenkins Multistage Pipeline — Deploy + Test con `curl -fsS \| grep -q` + agent via Launch via SSH | Completado |
+| [Día 82](100-devops-days/day-082/README.md) | Ansible Inventory para App Server Testing — primer lab de Ansible en el journal principal, formato INI con `stapp03` | Completado |
 
 ## Progreso - Kubernetes
 
