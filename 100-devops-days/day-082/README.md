@@ -601,6 +601,14 @@ El paralelo conceptual existe: ambos son "lo primero que se consulta para resolv
 | Playbook funciona en `stapp03` pero al agregar otro host falla            | Las variables son por-host; cada host necesita sus propias credenciales                              | Mover a `[group:vars]` lo común; mantener por-host solo lo específico                            |
 | `Host key verification failed`                                           | Primera conexión al host — known_hosts no tiene la host key                                          | `ansible all -m ping` con `host_key_checking=False` (en `ansible.cfg`) o aceptar manualmente     |
 
+## Deep dive — referencia transversal de inventories
+
+Para una referencia completa de inventarios fuera del scope de este lab específico (formatos, dynamic plugins, vault, precedencia de variables, troubleshooting), ver:
+
+- [`tools/ansible/inventories.md`](../../tools/ansible/inventories.md) — guía de referencia transversal
+
+Esa guía amplía los temas tocados acá con casos productivos (AWS EC2 plugin, inventario por directorio, ansible-vault para secrets), troubleshooting general, y el orden completo de precedencia de variables.
+
 ## Recursos
 
 - [Build your inventory (oficial)](https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html)

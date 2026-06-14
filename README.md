@@ -131,7 +131,8 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | Herramienta | Descripción |
 |-------------|-------------|
 | [sed](tools/sed/README.md) | Stream Editor — sustitución, filtrado y edición de texto en línea de comandos |
-| [kubectl](tools/kubectl/README.md) | Guía de Kubernetes: cómo seleccionar y editar componentes |
+| [kubectl](tools/kubectl/README.md) | Guía de Kubernetes: seleccionar, editar componentes, volúmenes, config y secretos |
+| [ansible](tools/ansible/README.md) | Guía de Ansible: inventarios, conceptos fundamentales, comandos básicos |
 
 ## Estructura del repositorio
 

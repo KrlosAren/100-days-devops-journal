@@ -158,3 +158,6 @@ nav:
           - "Editar componentes": tools/kubectl/editar.md
           - "Volúmenes (PV / PVC / hostPath)": tools/kubectl/volumenes.md
           - "Config y Secretos (Opaque / stringData / ConfigMap)": tools/kubectl/config-y-secretos.md
+      - ansible:
+          - "Índice": tools/ansible/README.md
+          - "Inventories (INI / YAML / JSON / Dynamic)": tools/ansible/inventories.md
