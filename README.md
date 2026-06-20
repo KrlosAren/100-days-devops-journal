@@ -96,6 +96,12 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 80](100-devops-days/day-080/README.md) | Jenkins Chained Builds — upstream `devops-app-deployment` → downstream `manage-services` con "trigger only if stable" | Completado |
 | [Día 81](100-devops-days/day-081/README.md) | Jenkins Multistage Pipeline — Deploy + Test con `curl -fsS \| grep -q` + agent via Launch via SSH | Completado |
 | [Día 82](100-devops-days/day-082/README.md) | Ansible Inventory para App Server Testing — primer lab de Ansible en el journal principal, formato INI con `stapp03` | Completado |
+| [Día 83](100-devops-days/day-083/README.md) | Troubleshoot and Create Ansible Playbook — corregir inventario + primer playbook con módulo `file` + `state: touch` | Completado |
+| [Día 84](100-devops-days/day-084/README.md) | Copy Data to App Servers using Ansible — `hosts: all` + módulo `copy` + `become: true` a los 3 app servers | Completado |
+| [Día 85](100-devops-days/day-085/README.md) | Create Files on App Servers using Ansible — módulo `file` + `mode: '0777'` + `owner: "{{ ansible_user }}"` por host | Completado |
+| [Día 86](100-devops-days/day-086/README.md) | Ansible Ping Module Usage — passwordless SSH (`ssh-keygen` + `ssh-copy-id`) + módulo `ping` (SSH+Python, no ICMP) | Completado |
+| [Día 87](100-devops-days/day-087/README.md) | Ansible Install Package — módulo `yum` con `state: present` + idempotencia + `become: true` en los 3 app servers | Completado |
+| [Día 88](100-devops-days/day-088/README.md) | Ansible Blockinfile Module — instalar `httpd` + `service` started/enabled + `blockinfile` con marcadores por defecto, `create: yes`, owner/group `apache`, `mode '0655'` | Completado |
 
 ## Progreso - Kubernetes
 

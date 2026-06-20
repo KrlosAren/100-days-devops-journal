@@ -409,6 +409,9 @@ El paralelo conceptual existe — ambos son "lo primero que se consulta para res
 | Día     | Cubre                                                                       |
 | ------- | --------------------------------------------------------------------------- |
 | Día 82  | Primer lab de Ansible en el journal principal — inventario INI con `stapp03` |
+| Día 83  | Troubleshoot de inventario incorrecto + primer playbook con módulo `file` apuntando a `stapp01` |
+| Día 84  | Inventario multi-host (3 app servers, credenciales por línea) + `hosts: all` con módulo `copy` |
+| Día 85  | Variable de conexión `{{ ansible_user }}` reusada en el playbook para setear owner por host |
 
 > Más días se agregarán a medida que aparezcan en el journal.
 

@@ -128,6 +128,12 @@ nav:
       - "Día 80 · Jenkins Chained Builds (upstream → downstream trigger only if stable)": devops/day-080/README.md
       - "Día 81 · Jenkins Multistage Pipeline (Deploy + Test con curl + grep)": devops/day-081/README.md
       - "Día 82 · Ansible Inventory for App Server Testing (formato INI)": devops/day-082/README.md
+      - "Día 83 · Troubleshoot and Create Ansible Playbook (file module + state touch)": devops/day-083/README.md
+      - "Día 84 · Copy Data to App Servers (copy module + hosts all + become)": devops/day-084/README.md
+      - "Día 85 · Create Files on App Servers (file module + mode + ansible_user)": devops/day-085/README.md
+      - "Día 86 · Ansible Ping Module (passwordless SSH + ping module)": devops/day-086/README.md
+      - "Día 87 · Ansible Install Package (módulo yum + idempotencia)": devops/day-087/README.md
+      - "Día 88 · Ansible Blockinfile Module (httpd + bloque marcado + owner/group/mode)": devops/day-088/README.md
   - Kubernetes:
       - "Día 01 · Crear un Pod": kubernetes/day-001/README.md
       - "Día 02 · Crear un Deployment": kubernetes/day-002/README.md
