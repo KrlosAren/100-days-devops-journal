@@ -134,6 +134,12 @@ nav:
       - "Día 86 · Ansible Ping Module (passwordless SSH + ping module)": devops/day-086/README.md
       - "Día 87 · Ansible Install Package (módulo yum + idempotencia)": devops/day-087/README.md
       - "Día 88 · Ansible Blockinfile Module (httpd + bloque marcado + owner/group/mode)": devops/day-088/README.md
+      - "Día 89 · Ansible Manage Services (módulo service: started vs restarted + enabled)": devops/day-089/README.md
+      - "Día 90 · Managing ACLs Using Ansible (módulo acl + POSIX ACLs + multi-play)": devops/day-090/README.md
+      - "Día 91 · Ansible Lineinfile Module (línea única + insertbefore/regexp + touch no trunca)": devops/day-091/README.md
+      - "Día 92 · Managing Jinja2 Templates (módulo template + roles + inventory_hostname)": devops/day-092/README.md
+      - "Día 93 · Using Ansible Conditionals (when + ansible_nodename + facts)": devops/day-093/README.md
+      - "Día 94 · Create VPC Using Terraform (IaC: providers, resources, state, plan/apply)": devops/day-094/README.md
   - Kubernetes:
       - "Día 01 · Crear un Pod": kubernetes/day-001/README.md
       - "Día 02 · Crear un Deployment": kubernetes/day-002/README.md

@@ -102,6 +102,12 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 86](100-devops-days/day-086/README.md) | Ansible Ping Module Usage — passwordless SSH (`ssh-keygen` + `ssh-copy-id`) + módulo `ping` (SSH+Python, no ICMP) | Completado |
 | [Día 87](100-devops-days/day-087/README.md) | Ansible Install Package — módulo `yum` con `state: present` + idempotencia + `become: true` en los 3 app servers | Completado |
 | [Día 88](100-devops-days/day-088/README.md) | Ansible Blockinfile Module — instalar `httpd` + `service` started/enabled + `blockinfile` con marcadores por defecto, `create: yes`, owner/group `apache`, `mode '0655'` | Completado |
+| [Día 89](100-devops-days/day-089/README.md) | Ansible Manage Services — módulo `service` en profundidad: `started` (idempotente) vs `restarted` (siempre), `enabled: yes` (boot), handlers/`notify`, `service` vs `systemd` | Completado |
+| [Día 90](100-devops-days/day-090/README.md) | Managing ACLs Using Ansible — módulo `acl` (`entity`/`etype`/`permissions`) + POSIX ACLs (`getfacl`/mask) para dar acceso a un tercero sin cambiar owner; primer playbook **multi-play** (un play por host) | Completado |
+| [Día 91](100-devops-days/day-091/README.md) | Ansible Lineinfile Module — `httpd` + `service` + `lineinfile` (`line`/`insertbefore: BOF`/`regexp`); idempotente sobre la línea completa; `state: touch` **no trunca** (sobrevive contenido pre-sembrado); perms `0744` | Completado |
+| [Día 92](100-devops-days/day-092/README.md) | Managing Jinja2 Templates — primer **role** (estructura `tasks/templates/...`) + módulo `template` (renderiza Jinja2) + `inventory_hostname` (vs `ansible_hostname`) + templating lazy por host; owner `ansible_user`, perms `0777` | Completado |
+| [Día 93](100-devops-days/day-093/README.md) | Using Ansible Conditionals — `hosts: all` + `when: ansible_nodename == ...` por task (tercera forma de routing host→archivo vs multi-play día 90); `when` produce `skipped`; fact obliga `gather_facts`; owner `ansible_user`, perms `0777` | Completado |
+| [Día 94](100-devops-days/day-094/README.md) | **Create VPC Using Terraform** — inicio sección IaC/Terraform: `provider` (region `us-east-1`) + `resource "aws_vpc"` (tag `Name`), ciclo `init`/`plan`/`apply`, concepto de **state** y drift; provisioning vs configuration management | Completado |
 
 ## Progreso - Kubernetes
 
