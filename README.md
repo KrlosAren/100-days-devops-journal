@@ -2,6 +2,25 @@
 
 Reto personal de 100 días para aprender y practicar DevOps. Cada día se documenta un desafío, concepto o práctica relacionada con el mundo DevOps.
 
+## 🎉 Reto completado — 100/100 días
+
+El reto está terminado. El recorrido atravesó cuatro grandes bloques, cada uno construyendo sobre el anterior:
+
+| Bloque | Días | Foco | Días representativos |
+| ------ | ---- | ---- | -------------------- |
+| **Fundamentos Linux** | 1 – 47 | Usuarios, permisos, servicios, SSH, scripting, redes | — |
+| **Kubernetes** | 48 – 67 | Pods, Deployments, Services, ConfigMaps/Secrets, volúmenes, stacks multi-componente | [Día 55 (sidecars)](100-devops-days/day-055/README.md) · [Día 66 (stack MySQL)](100-devops-days/day-066/README.md) |
+| **CI/CD (Jenkins)** | 68 – 81 | Setup, plugins, RBAC, jobs parametrizados, pipelines declarativos, chained builds | [Día 77 (deploy pipeline)](100-devops-days/day-077/README.md) · [Día 81 (multistage + test)](100-devops-days/day-081/README.md) |
+| **Ansible** | 82 – 93 | Inventarios, playbooks, módulos (`copy`/`file`/`yum`/`service`/`acl`/`lineinfile`/`template`), roles, condicionales | [Día 92 (roles + Jinja2)](100-devops-days/day-092/README.md) · [Día 93 (`when`)](100-devops-days/day-093/README.md) |
+| **Terraform / IaC** | 94 – 100 | VPC, SG, EC2, IAM, DynamoDB, CloudWatch; state, variables, outputs, idempotencia | [Día 96 (EC2 + grafo)](100-devops-days/day-096/README.md) · [Día 100 (CloudWatch)](100-devops-days/day-100/README.md) |
+
+**El hilo que conecta todo — el modelo declarativo.** Kubernetes (`kind: Deployment`), Ansible (`state: present`) y Terraform (`resource`) son la misma idea en tres dialectos: se declara el **estado deseado** y la herramienta calcula las acciones para alcanzarlo, de forma **idempotente**. Volver a aplicar no rompe nada; el criterio de "terminado" no es "el comando corrió" sino "la realidad coincide con lo declarado" (el `terraform plan` = *No changes*, el `changed=0` de Ansible).
+
+**Lecciones transversales ancladas**:
+- *"Verde ≠ correcto"* — un `apply`/build exitoso no garantiza cumplir el requisito (K8s validadores, IAM aceptando acciones vacías); verificar el estado final campo por campo.
+- *Traducir el requisito literal* al campo exacto (tag `Name`, `key_name`, `ec2:Describe*`, `comparison_operator`).
+- *Idempotencia* como propiedad central: `copy` por checksum, `yum state: present`, `terraform plan` limpio.
+
 ## Reglas del reto
 
 1. Dedicar tiempo cada día a un tema de DevOps
@@ -108,6 +127,12 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [Día 92](100-devops-days/day-092/README.md) | Managing Jinja2 Templates — primer **role** (estructura `tasks/templates/...`) + módulo `template` (renderiza Jinja2) + `inventory_hostname` (vs `ansible_hostname`) + templating lazy por host; owner `ansible_user`, perms `0777` | Completado |
 | [Día 93](100-devops-days/day-093/README.md) | Using Ansible Conditionals — `hosts: all` + `when: ansible_nodename == ...` por task (tercera forma de routing host→archivo vs multi-play día 90); `when` produce `skipped`; fact obliga `gather_facts`; owner `ansible_user`, perms `0777` | Completado |
 | [Día 94](100-devops-days/day-094/README.md) | **Create VPC Using Terraform** — inicio sección IaC/Terraform: `provider` (region `us-east-1`) + `resource "aws_vpc"` (tag `Name`), ciclo `init`/`plan`/`apply`, concepto de **state** y drift; provisioning vs configuration management | Completado |
+| [Día 95](100-devops-days/day-095/README.md) | Create Security Group Using Terraform — `data "aws_vpc"` (leer vs crear) + `aws_security_group` con reglas `ingress` (HTTP 80 / SSH 22, `0.0.0.0/0`); gotcha **`name` (GroupName real) vs tag `Name`** — inverso al día 94; `name`/`description` inmutables (replace) | Completado |
+| [Día 96](100-devops-days/day-096/README.md) | Create EC2 Instance Using Terraform — **multi-provider** (`aws`/`tls`/`local`): `tls_private_key` + `aws_key_pair` + `local_file` (`.pem` 0400) + `aws_instance`; **grafo de dependencias** implícito (`key_name` referencia); `vpc_security_group_ids` (id) vs `security_groups` (legacy); secretos en el state | Completado |
+| [Día 97](100-devops-days/day-097/README.md) | Create IAM Policy Using Terraform — `aws_iam_policy` + data source `aws_iam_policy_document` (`.json`); lenguaje JSON de policies (Version/Statement/Effect/Action/Resource); gotcha **`ec2:Describe*`** (con wildcard) y `.json` (object vs string); IAM global pero provider necesita región | Completado |
+| [Día 98](100-devops-days/day-098/README.md) | Launch EC2 in Private VPC Subnet — primer proyecto **multi-archivo** (`main`/`variables`/`outputs`): VPC + subnet (`map_public_ip_on_launch=false`) + SG (ingress solo CIDR VPC) + EC2; `variable`/`var.X` + `output`; requisito de **idempotencia** (`plan` "No changes"); `(known after apply)` referencia vs no-seteado | Completado |
+| [Día 99](100-devops-days/day-099/README.md) | Attach IAM Policy for DynamoDB Access — `aws_dynamodb_table` (minimal, `PAY_PER_REQUEST`) + **IAM role** (`assume_role_policy`/trust) + policy read-only **scoped al ARN** + `aws_iam_role_policy_attachment`; cierra el arco IAM del día 97; `terraform.tfvars` | Completado |
+| [Día 100](100-devops-days/day-100/README.md) | 🎉 **Create and Configure CloudWatch Alarm** — cierre del reto: `aws_instance` + `aws_cloudwatch_metric_alarm` (mapeo spec→campos: `comparison_operator`/`threshold`/`period 300`/`evaluation_periods`) + `dimensions.InstanceId` + `alarm_actions` a SNS; observabilidad como paso final del ciclo IaC | Completado |
 
 ## Progreso - Kubernetes
 
@@ -145,6 +170,7 @@ Reto personal de 100 días para aprender y practicar DevOps. Cada día se docume
 | [sed](tools/sed/README.md) | Stream Editor — sustitución, filtrado y edición de texto en línea de comandos |
 | [kubectl](tools/kubectl/README.md) | Guía de Kubernetes: seleccionar, editar componentes, volúmenes, config y secretos |
 | [ansible](tools/ansible/README.md) | Guía de Ansible: inventarios, conceptos fundamentales, comandos básicos |
+| [terraform](tools/terraform/README.md) | Guía de Terraform/IaC: providers, resources, state, ciclo init/plan/apply, CIDR y redes |
 
 ## Estructura del repositorio
 

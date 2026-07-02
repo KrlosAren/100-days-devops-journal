@@ -140,6 +140,12 @@ nav:
       - "Día 92 · Managing Jinja2 Templates (módulo template + roles + inventory_hostname)": devops/day-092/README.md
       - "Día 93 · Using Ansible Conditionals (when + ansible_nodename + facts)": devops/day-093/README.md
       - "Día 94 · Create VPC Using Terraform (IaC: providers, resources, state, plan/apply)": devops/day-094/README.md
+      - "Día 95 · Create Security Group Using Terraform (data sources + ingress + name vs tag)": devops/day-095/README.md
+      - "Día 96 · Create EC2 Instance Using Terraform (multi-provider + key pairs + grafo de dependencias)": devops/day-096/README.md
+      - "Día 97 · Create IAM Policy Using Terraform (IAM + policy document + JSON policy language)": devops/day-097/README.md
+      - "Día 98 · Launch EC2 in Private VPC Subnet (multi-file + variables + outputs + red privada)": devops/day-098/README.md
+      - "Día 99 · Attach IAM Policy for DynamoDB Access (IAM role + trust policy + attachment + least privilege)": devops/day-099/README.md
+      - "Día 100 · Create and Configure Alarm Using CloudWatch (observabilidad + alarma métrica + SNS)": devops/day-100/README.md
   - Kubernetes:
       - "Día 01 · Crear un Pod": kubernetes/day-001/README.md
       - "Día 02 · Crear un Deployment": kubernetes/day-002/README.md
@@ -173,3 +179,6 @@ nav:
       - ansible:
           - "Índice": tools/ansible/README.md
           - "Inventories (INI / YAML / JSON / Dynamic)": tools/ansible/inventories.md
+      - terraform:
+          - "Índice": tools/terraform/README.md
+          - "CIDR y redes (cálculo, RFC 1918, solapamiento)": tools/terraform/cidr.md

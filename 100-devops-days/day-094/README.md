@@ -69,7 +69,22 @@ Dos identificadores distintos que conviene no confundir:
 
 El lab dice "any IPv4 CIDR", pero en la práctica el rango **no** es arbitrario. Un bloque CIDR se escribe `red/prefijo`, ej. `10.0.0.0/16`.
 
-**Qué significa el `/N`**: es la cantidad de bits **fijos** (la parte de red). Los bits restantes (`32 - N`) son para hosts. A mayor `/N`, **menos** IPs:
+**Qué significa el `/N`**: es la cantidad de bits **fijos** (la parte de red). Los bits restantes (`32 - N`) son para hosts. A mayor `/N`, **menos** IPs.
+
+**El cálculo** — una IPv4 tiene 32 bits en total (4 octetos × 8). El número de IPs sale de restar el prefijo a 32 y elevar 2 a esa potencia:
+
+```
+IPs totales = 2^(32 − N)
+```
+
+| CIDR  | `32 − N` (bits de host) | `2^(32−N)` | IPs totales |
+| ----- | ----------------------- | ---------- | ----------- |
+| `/16` | `32 − 16 = 16`          | `2^16`     | 65 536      |
+| `/20` | `32 − 20 = 12`          | `2^12`     | 4 096       |
+| `/24` | `32 − 24 = 8`           | `2^8`      | 256         |
+| `/28` | `32 − 28 = 4`           | `2^4`      | 16          |
+
+Tabla con las IPs ya calculadas y lo usable en AWS:
 
 | CIDR  | Bits de host | IPs totales | IPs usables en AWS* | Uso típico                          |
 | ----- | ------------ | ----------- | ------------------- | ----------------------------------- |
@@ -100,6 +115,52 @@ Regla mental rápida: cada `+4` en el prefijo **divide** las IPs por 16. `/16` =
 1. **Tamaño**: estimar cuántas IPs hará falta (instancias + subnets + crecimiento). `/16` da margen amplio; es el default seguro.
 2. **No solaparse**: el CIDR no debe chocar con otras VPCs, on-premise, o redes con las que se hará **peering/VPN**. Dos redes con CIDRs solapados no pueden enrutar entre sí. Por eso se planifica un esquema (ej. `10.0.0.0/16` para prod, `10.1.0.0/16` para staging).
 3. **Dejar espacio para subnets**: la VPC se subdivide luego en subnets (`/24`, `/20`, etc.), una por AZ. El `/16` de la VPC se reparte entre ellas.
+
+### Solapamiento de CIDRs — cómo saber si dos rangos chocan
+
+El requisito de "no solaparse" (peering/VPN) exige poder calcular **qué rango real cubre** un CIDR y comparar dos bloques. El rango va de la **primera IP** (network address, bits de host en 0) a la **última** (bits de host en 1):
+
+```
+rango = [ red , red + 2^(32−N) − 1 ]
+```
+
+| CIDR            | Primera IP    | Última IP        |
+| --------------- | ------------- | ---------------- |
+| `10.0.0.0/16`   | `10.0.0.0`    | `10.0.255.255`   |
+| `10.1.0.0/16`   | `10.1.0.0`    | `10.1.255.255`   |
+| `10.0.0.0/24`   | `10.0.0.0`    | `10.0.0.255`     |
+
+**El truco rápido por octetos**: el prefijo dice cuántos octetos quedan "fijos":
+
+- `/8` → fija 1 octeto: `10.x.x.x` (todo lo que empiece con `10.`)
+- `/16` → fija 2 octetos: `10.0.x.x`
+- `/24` → fija 3 octetos: `10.0.0.x`
+
+Por eso `10.0.0.0/16` y `10.1.0.0/16` **no** se solapan (difieren en el 2º octeto), pero `10.0.0.0/16` **contiene** a `10.0.5.0/24` (este último cae dentro de `10.0.x.x`) → **sí** se solapan.
+
+**La regla de oro del solapamiento** — dos rangos A y B chocan si:
+
+```
+inicioA ≤ finB   Y   inicioB ≤ finA
+```
+
+Si uno empieza antes de que el otro termine, y viceversa, hay intersección. Ejemplo: `10.0.0.0/16` (`10.0.0.0`–`10.0.255.255`) vs `10.0.128.0/17` (`10.0.128.0`–`10.0.255.255`) → solapan (el segundo está enterito dentro del primero).
+
+**El caso no obvio — prefijos que no caen en borde de octeto** (`/20`, `/12`):
+
+Un `/20` fija 2 octetos **+ 4 bits** del tercero, así que los bloques avanzan de **16 en 16** en el 3er octeto:
+
+```
+10.0.0.0/20   → 10.0.0.0  – 10.0.15.255
+10.0.16.0/20  → 10.0.16.0 – 10.0.31.255   ← siguiente bloque, NO 10.0.20.0
+10.0.32.0/20  → 10.0.32.0 – 10.0.47.255
+```
+
+Acá es fácil equivocarse: `10.0.10.0/20` y `10.0.12.0/20` **apuntan al mismo bloque** (`10.0.0.0/20`) y solaparían — porque ambos caen en el primer tramo de 16. Por eso, salvo que se domine el cálculo, conviene:
+
+- **Alinear a bordes de octeto** (`/8`, `/16`, `/24`) — el solapamiento se ve "a ojo".
+- Usar una herramienta: `ipcalc 10.0.0.0/20` muestra red, broadcast y rango; o calculadoras CIDR online.
+- AWS ayuda: **no deja crear subnets que se solapen** dentro de una misma VPC, ni peering entre VPCs con CIDRs solapados — falla con error explícito.
 
 ### El `provider` — fijar la región en código
 
