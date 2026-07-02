@@ -1,0 +1,18 @@
+---
+- name: "create empty file"
+  hosts: all
+  become: yes
+  tasks:
+    - name: "create a file /tmp/emtpy.txt"
+      file:
+        path: /tmp/emtpy.txt
+        state: touch
+    
+    - name: "verify file created"
+      stat:
+        path: /tmp/emtpy.txt
+      register: file_stat
+
+    - name: "print file status"
+      debug:
+        var: file_stat.stat

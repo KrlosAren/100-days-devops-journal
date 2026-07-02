@@ -1,0 +1,24 @@
+---
+- name: Copy file to apps servers
+  hosts: all
+  become: yes
+
+  vars:
+    file_src: "/usr/src/data/index.html"
+    file_dst: "/opt/data"
+
+  tasks:
+
+    - name: copy file
+      copy:
+        src: "{{ file_src }}"
+        dest: "{{ file_dst }}"
+
+    - name: validate file
+      slurp:
+        src: "/opt/data/index.html"
+      register: file_content
+
+    - name: content file
+      debug:
+        msg: "{{ file_content.content | b64decode }}"
